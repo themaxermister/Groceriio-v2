@@ -7,4 +7,8 @@
     <string name="register">Register</string>
     <string name="name">Full Name</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="success_subtext">Congratulations! Your account has been created. Kindly check your inbox to confirm your account!</string>
+    <string name="success_titletext">Registered Successfully!</string>
+    <string name="success_logo">Success Logo</string>
+    <string name="back_to_login">Back to Login</string>
 </resources>

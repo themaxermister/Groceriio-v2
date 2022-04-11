@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/register_success" />
+        app:srcCompat="@drawable/order_success" />
 
     <TextView
         android:id="@+id/ordSuccessTitleText"
@@ -27,7 +27,7 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="25dp"
-        android:text="@string/success_titletext"
+        android:text="@string/order_accepted_titletext"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/md_theme_light_primary"
@@ -45,7 +45,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="30dp"
-        android:text="@string/success_subtext"
+        android:text="@string/order_accepted_subtext"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="50dp"
-        android:text="@string/back_to_login"
+        android:text="@string/back_to_home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

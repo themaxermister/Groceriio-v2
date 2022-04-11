@@ -11,4 +11,22 @@
     <string name="success_titletext">Registered Successfully!</string>
     <string name="success_logo">Success Logo</string>
     <string name="back_to_login">Back to Login</string>
+    <string name="title_activity_register_fail">RegisterFailActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="fail_titletext">Account Not Verified</string>
+    <string name="fail_subtext">Your account has not been verified. Please check your inbox again or request a new email.</string>
+    <string name="fail_resend">Resend Verification Email</string>
+    <string name="back">Back</string>
+    <string name="map_logo">map-logo</string>
+    <string name="current_location">Current Location</string>
+    <string name="order_accepted_titletext">Your order has been accepted!</string>
+    <string name="order_accepted_subtext">Your order has been placed and is being processed!</string>
+    <string name="back_to_home">Back to Home</string>
 </resources>

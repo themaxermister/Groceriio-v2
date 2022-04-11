@@ -37,10 +37,14 @@
             android:id="@+id/loginEmailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_baseline_email_24"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:hint="@string/email"
+            android:textColor="@color/md_theme_dark_background"
             android:textSize="20sp"
             android:textStyle="bold"
+            tools:ignore="TextContrastCheck"
             tools:text="@string/email" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -66,6 +70,8 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:hint="@string/password"
             android:textSize="20sp"

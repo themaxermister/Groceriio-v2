@@ -29,4 +29,10 @@
     <string name="order_accepted_titletext">Your order has been accepted!</string>
     <string name="order_accepted_subtext">Your order has been placed and is being processed!</string>
     <string name="back_to_home">Back to Home</string>
+    <string name="collection_location">Collection Location</string>
+    <string name="address">Address</string>
+    <string name="current_address">Current address</string>
+    <string name="destination_address">Destination address</string>
+    <string name="confirm_order">Confirm Order</string>
+    <string name="divider">Divider</string>
 </resources>

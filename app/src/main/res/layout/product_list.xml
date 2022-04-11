@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="90dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,38 +24,36 @@
             android:text="Back"
             android:textColor="@color/md_theme_light_primary"
             android:textSize="24dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/search_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header"
-        android:background="@drawable/search_rectangle">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_bar_cat"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:hint="Item Name"
+            android:textColorHint="@color/md_theme_light_onPrimaryContainer"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/search_icon"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/search_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             style="@style/Widget.Material3.Button.Icon"
-            android:background="@drawable/ic_baseline_search_24"/>
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="340dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/search_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            android:hint="Search Store" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_baseline_search_24"
+            android:paddingHorizontal="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/search_bar_cat"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/search_container"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         /*add the recycler view for product items here*/

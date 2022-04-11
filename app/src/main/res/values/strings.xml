@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Groceriio</string>
     <string name="login_logo">Groceriio</string>
-    <string name="email">email</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="name">Full Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="success_subtext">Congratulations! Your account has been created. Kindly check your inbox to confirm your account!</string>
+    <string name="success_titletext">Registered Successfully!</string>
+    <string name="success_logo">Success Logo</string>
+    <string name="back_to_login">Back to Login</string>
 </resources>

@@ -25,9 +25,9 @@
             android:textColor="@color/md_theme_light_primary"
             android:textSize="24dp"/>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/search_bar_cat"
-            android:layout_width="150dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

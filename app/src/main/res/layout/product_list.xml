@@ -22,7 +22,7 @@
             style="@style/Widget.Material3.Button.TextButton"
             android:drawableLeft="@drawable/ic_baseline_arrow_back_ios_24"
             android:text="Back"
-            android:textColor="@color/primary"
+            android:textColor="@color/md_theme_light_primary"
             android:textSize="24dp"/>
 
         <EditText
@@ -34,7 +34,7 @@
             app:layout_constraintStart_toEndOf="@id/back_button"
             app:layout_constraintEnd_toEndOf="@id/search_icon"
             android:hint="Category"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/md_theme_light_onPrimaryContainer"
             android:textSize="28dp"/>
 
         <Button

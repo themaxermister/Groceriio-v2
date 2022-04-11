@@ -25,28 +25,31 @@
             android:text="Back"
             android:textColor="@color/md_theme_light_primary"
             android:textSize="24dp"/>
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/search_bar_cat"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/back_button"
-            app:layout_constraintEnd_toEndOf="@id/search_icon"
-            android:textSize="28dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/search_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        android:background="@drawable/search_rectangle">
 
         <Button
             android:id="@+id/search_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            style="@style/Widget.Material3.Button.Icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/search_bar_cat"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:paddingHorizontal="5dp"
+            style="@style/Widget.Material3.Button.Icon"
             android:background="@drawable/ic_baseline_search_24"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/search_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            android:hint="Search Store" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
@@ -54,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintTop_toBottomOf="@+id/search_container"
         android:src="@drawable/groceriio_logo"/>
 
     <androidx.cardview.widget.CardView
@@ -183,6 +186,7 @@
                 android:textSize="18dp"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/product_card3"
         android:layout_width="match_parent"

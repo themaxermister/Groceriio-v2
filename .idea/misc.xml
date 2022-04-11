@@ -9,23 +9,25 @@
         <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/drawable/quantity_rectangle.xml" value="0.1" />
         <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/drawable/search_rectangle.xml" value="0.1" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/drawable/shopping_list_item_view.xml" value="0.1015" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/activity_collection_location.xml" value="0.10104166666666667" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/activity_enter_address.xml" value="0.10104166666666667" />
         <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/activity_login.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/activity_main.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/item_page.xml" value="0.1" />
-        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/product_list.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/activity_order_confirmation.xml" value="0.10104166666666667" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/activity_register.xml" value="0.10104166666666667" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/activity_register_fail.xml" value="0.10104166666666667" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/activity_register_success.xml" value="0.10104166666666667" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/item_page.xml" value="0.12" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/product_list.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/product_list_view.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/search_page.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/search_page.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/shipping_list_page.xml" value="0.10104166666666667" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/shopping_list_item_view.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Athena Chua/AndroidStudioProjects/Groceriio-v2/app/src/main/res/layout/shopping_list_page.xml" value="0.14666666666666667" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.15" />
-        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1555" />
-        <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_collection_location.xml" value="0.13177083333333334" />
-        <entry key="app/src/main/res/layout/activity_enter_address.xml" value="0.2310714721679687" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.30416666666666664" />
-        <entry key="app/src/main/res/layout/activity_order_confirmation.xml" value="0.14583333333333334" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.2386581420898438" />
-        <entry key="app/src/main/res/layout/activity_register_fail.xml" value="0.23311360677083337" />
-        <entry key="app/src/main/res/layout/activity_register_success.xml" value="0.2890625" />
       </map>
     </option>
   </component>

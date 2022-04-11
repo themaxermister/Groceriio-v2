@@ -45,6 +45,7 @@
             android:background="@drawable/ic_baseline_search_24"/>
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_bar_cat"
             android:layout_width="340dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/search_icon"

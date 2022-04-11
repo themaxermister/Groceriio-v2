@@ -41,8 +41,10 @@
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:hint="@string/email"
+            android:textColor="@color/md_theme_dark_background"
             android:textSize="20sp"
             android:textStyle="bold"
+            tools:ignore="TextContrastCheck"
             tools:text="@string/email" />
 
     </com.google.android.material.textfield.TextInputLayout>

@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Groceriio</string>
     <string name="login_logo">Groceriio</string>
-    <string name="email">email</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="name">Full Name</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>

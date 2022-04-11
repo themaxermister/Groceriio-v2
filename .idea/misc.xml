@@ -4,16 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.15" />
+        <entry key="app/src/main/res/drawable/divider_line.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_collection_location.xml" value="0.13177083333333334" />
+        <entry key="app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/ic_dest_circle_24.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/record_circle.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/vertical_dotted_line.xml" value="0.1555" />
+        <entry key="app/src/main/res/layout/activity_collection_location.xml" value="0.254965087890625" />
         <entry key="app/src/main/res/layout/activity_enter_address.xml" value="0.2310714721679687" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.10065460205078125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.30416666666666664" />
         <entry key="app/src/main/res/layout/activity_order_confirmation.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.2386581420898438" />
         <entry key="app/src/main/res/layout/activity_register_fail.xml" value="0.23311360677083337" />
         <entry key="app/src/main/res/layout/activity_register_success.xml" value="0.2890625" />
+        <entry key="app/src/main/res/layout/product_list.xml" value="0.1" />
       </map>
     </option>
   </component>

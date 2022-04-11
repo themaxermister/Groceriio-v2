@@ -21,6 +21,6 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterEmailInput = findViewById(R.id.registerEmailInput);
         mRegisterPasswordInput = findViewById(R.id.registerPasswordInput);
         mRegisterPasswordInput2 = findViewById(R.id.registerPasswordInput2);
-        mRegisterBtn = findViewById(R.id.regSuccessBackBtn);
+        mRegisterBtn = findViewById(R.id.ordSuccessBackBtn);
     }
 }

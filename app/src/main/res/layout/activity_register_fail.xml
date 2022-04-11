@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/md_theme_dark_errorContainer"
     tools:context=".RegisterSuccessActivity">
 
     <ImageView
@@ -18,19 +19,19 @@
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/register_success" />
+        app:srcCompat="@drawable/register_fail" />
 
     <TextView
-        android:id="@+id/ordSuccessTitleText"
+        android:id="@+id/regFailTitleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="25dp"
-        android:text="@string/success_titletext"
+        android:text="@string/fail_titletext"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/md_theme_light_primary"
+        android:textColor="@color/md_theme_light_error"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,30 +40,45 @@
         app:layout_constraintTop_toBottomOf="@+id/ordSuccessLogo" />
 
     <TextView
-        android:id="@+id/ordSuccessSubText"
+        android:id="@+id/regFailSubText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="30dp"
-        android:text="@string/success_subtext"
+        android:text="@string/fail_subtext"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ordSuccessTitleText" />
+        app:layout_constraintTop_toBottomOf="@+id/regFailTitleText" />
 
     <Button
-        android:id="@+id/ordSuccessBackBtn"
+        android:id="@+id/regFailResendBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="#9E1C1C"
+        android:text="@string/fail_resend"
+        app:layout_constraintBottom_toTopOf="@+id/regFailBackBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/regFailBackBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/back_to_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

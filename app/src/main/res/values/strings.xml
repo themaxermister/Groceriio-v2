@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Groceriio</string>
     <string name="login_logo">Groceriio</string>
+    <string name="email">email</string>
 </resources>

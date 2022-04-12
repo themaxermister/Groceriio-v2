@@ -55,7 +55,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/product_item"
+                    tools:ignore="ImageContrastCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.cardview.widget.CardView
@@ -99,6 +101,7 @@
                         android:layout_width="0dp"
                         android:layout_height="18dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginEnd="10dp"
                         android:text="@string/metric"
                         android:textSize="18sp"
@@ -110,37 +113,39 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/productPgPriceQua"
                         android:layout_width="0dp"
-                        android:layout_height="68dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_height="106dp"
+                        android:layout_marginTop="10dp"
                         android:paddingHorizontal="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/productPgMetric">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout6"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            app:layout_constraintStart_toStartOf="parent">
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/productPgPrice">
 
                             <Button
                                 android:id="@+id/productPgMinus"
                                 style="@style/Widget.Material3.Button.Icon"
                                 android:layout_width="48dp"
-                                android:layout_height="0dp"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/ic_baseline_remove_24"
                                 android:contentDescription="@string/minus_sign"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/productPgQuantInp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
                                 android:id="@+id/productPgQuantInp"
                                 android:layout_width="wrap_content"
-                                android:layout_height="0dp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/quantity_rectangle"
@@ -150,7 +155,6 @@
                                 android:textColor="#757575"
                                 android:textSize="16sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/productPgPlus"
                                 app:layout_constraintStart_toEndOf="@+id/productPgMinus"
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:ignore="TextContrastCheck" />
@@ -159,29 +163,42 @@
                                 android:id="@+id/productPgPlus"
                                 style="@style/Widget.Material3.Button.Icon"
                                 android:layout_width="48dp"
-                                android:layout_height="0dp"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
                                 android:background="@drawable/ic_baseline_add_24"
                                 android:contentDescription="@string/plus_sign"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/productPgQuantInp"
                                 app:layout_constraintTop_toTopOf="parent" />
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
                             android:id="@+id/productPgPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
+                            android:layout_marginTop="10dp"
                             android:text="@string/price_input"
                             android:textSize="30sp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/productAddToCart"
+                            android:layout_width="40dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="10dp"
+                            android:contentDescription="@string/add_to_cart"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="h,1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -192,6 +209,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
                 android:paddingVertical="10dp"
                 app:cardBackgroundColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -239,6 +257,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
                 android:paddingVertical="10dp"
                 app:cardBackgroundColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"

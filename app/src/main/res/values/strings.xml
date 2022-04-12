@@ -57,4 +57,5 @@
     <string name="confirm_order">Confirm Order</string>
     <string name="shopping_list">Shopping List</string>
     <string name="total_title">Total:</string>
+    <string name="add_to_cart">Add to Cart</string>
 </resources>

@@ -24,6 +24,11 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText mLoginEmailInput, mLoginPasswordInput;
     Button mLoginBtn, mLoginRegisterBtn;
 
+    /*
+    mLoginMsg = findViewById(R.id.loginAccessMsg);
+    mLoginMsg.setVisibility(View.GONE);
+    mLoginMsg.setText("");
+     */
     Handler handler = new Handler();
 
     private FirebaseAuth mAuth;
@@ -32,8 +37,8 @@ public class LoginActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        finish();
+        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        //finish();
     }
 
     @Override
@@ -47,10 +52,10 @@ public class LoginActivity extends AppCompatActivity {
         mLoginRegisterBtn = findViewById(R.id.loginRegisterBtn);
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
 
-        if (fAuth.getCurrentUser() != null) {
+        /*if (fAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
-        }
+        }*/
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                // mLoginMsg.setVisibility(view.GONE);
+
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -79,11 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT)
                                     .show();
 
-                            handler.postDelayed(new Runnable() {
-                                public void run() {
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                }
-                            }, 1000);   //3 seconds
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
                         } else {
                             // mLoginMsg.setText("Unsuccessful log in. Please try again.");
@@ -100,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mLoginRegisterButton.setOnClickListener(new View.OnClickListener() {
+        mLoginRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));

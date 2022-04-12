@@ -7,7 +7,7 @@
     tools:context=".RegisterSuccessActivity">
 
     <ImageView
-        android:id="@+id/ordSuccessLogo"
+        android:id="@+id/registerSuccessLogo"
         android:layout_width="0dp"
         android:layout_height="400dp"
         android:layout_marginStart="30dp"
@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/register_success" />
 
     <TextView
-        android:id="@+id/ordSuccessTitleText"
+        android:id="@+id/registerSuccessTitleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -35,10 +35,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ordSuccessLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/registerSuccessLogo" />
 
     <TextView
-        android:id="@+id/ordSuccessSubText"
+        android:id="@+id/registerSuccessSubText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -50,10 +50,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ordSuccessTitleText" />
+        app:layout_constraintTop_toBottomOf="@+id/registerSuccessTitleText" />
 
     <Button
-        android:id="@+id/ordSuccessBackBtn"
+        android:id="@+id/registerSuccessBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
@@ -62,6 +62,6 @@
         android:text="@string/back_to_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ordSuccessSubText" />
+        app:layout_constraintTop_toBottomOf="@+id/registerSuccessSubText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,7 @@ public class CollectionLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_location);
 
-        mCollectBackBtn = findViewById(R.id.collectBackBtn);
+        mCollectBackBtn = findViewById(R.id.productBackBtn);
         mCollectOrderConfirmBtn = findViewById(R.id.collectOrderConfirmBtn);
         mCollectAddrText = findViewById(R.id.collectAddrText);
         mCollectStartAddr = findViewById(R.id.collectStartAddr);

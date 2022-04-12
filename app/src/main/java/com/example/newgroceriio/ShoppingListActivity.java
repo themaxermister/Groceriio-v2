@@ -7,20 +7,20 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ShoppingListActivity extends AppCompatActivity {
-    Button confirmOrder, removeItem, increaseQuantity, decreaseQuantity;
-    TextView totalAmount;
+    Button mConfirmOrder, mItemRemove, mItemPlus, mItemMinus;
+    TextView mTotalCost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_list_page);
 
-        confirmOrder = findViewById(R.id.confirm_order_btn);
-        removeItem = findViewById(R.id.remove_item_btn);
-        increaseQuantity = findViewById(R.id.quantity_input_plus);
-        decreaseQuantity = findViewById(R.id.quantity_input_minus);
+        mConfirmOrder = findViewById(R.id.confirm_order_btn);
+        mItemRemove = findViewById(R.id.listItemRemove);
+        mItemPlus = findViewById(R.id.productPgPlus);
+        mItemMinus = findViewById(R.id.productPgMinus);
 
-        totalAmount = findViewById(R.id.total_amaount);
+        mTotalCost = findViewById(R.id.total_amaount);
 
     }
 }

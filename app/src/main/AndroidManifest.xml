@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewGroceriio">
         <activity
+            android:name=".NearestStoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".CollectionLocationActivity"
             android:exported="false" />
         <activity

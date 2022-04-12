@@ -35,4 +35,24 @@
     <string name="destination_address">Destination address</string>
     <string name="confirm_order">Confirm Order</string>
     <string name="divider">Divider</string>
+    <string name="product_details">Product Details</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="int_input">1</string>
+    <string name="price_input">$32</string>
+    <string name="search">Search</string>
+    <string name="search_input">Search Input</string>
+    <string name="nearest_store">Nearest Store</string>
+    <string name="search_location">Search Location</string>
+    <string name="category">Category</string>
+    <string name="category_name">Category Name</string>
+    <string name="product_name">Product Name</string>
+    <string name="metric">Metric</string>
+    <string name="metric">Metric</string>
+    <string name="brand">Brand</string>
+    <string name="nutrition">Nutrition</string>
+    <string name="nutrition_info">Nutrition Info</string>
+    <string name="product_info">Product Info</string>
+    <string name="product_image">Product Image</string>
+    <string name="plus_sign">Plus Sign</string>
+    <string name="minus_sign">Minus Sign</string>
 </resources>

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/searchTopBar"
+        android:id="@+id/mapSearchTopBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/searchBackBtn"
+            android:id="@+id/mapSearchBackBtn"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,11 +25,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/searchTitleText"
+            android:id="@+id/mapSearchTitleText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/avgardn"
-            android:text="@string/search"
+            android:text="@string/nearest_store"
             android:textAlignment="center"
             android:textColor="@color/md_theme_light_onBackground"
             android:textSize="25sp"
@@ -38,11 +38,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchBackBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/mapSearchBackBtn" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/searchBar"
+        android:id="@+id/mapSearchBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -50,41 +50,32 @@
         android:background="@drawable/search_rectangle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchTopBar">
+        app:layout_constraintTop_toBottomOf="@+id/mapSearchTopBar">
 
         <Button
-            android:id="@+id/searchIcon"
+            android:id="@+id/mapSearchIcon"
             style="@style/Widget.Material3.Button.Icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/ic_baseline_search_24"
             android:contentDescription="@string/search_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/searchBarInput"
-            app:layout_constraintEnd_toStartOf="@+id/searchBarInput"
+            app:layout_constraintBottom_toBottomOf="@+id/mapSearchBarInput"
+            app:layout_constraintEnd_toStartOf="@+id/mapSearchBarInput"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/searchBarInput" />
+            app:layout_constraintTop_toTopOf="@+id/mapSearchBarInput" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/searchBarInput"
+            android:id="@+id/mapSearchBarInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:hint="@string/search_input"
+            android:hint="@string/search_location"
             android:minHeight="48dp"
+            android:textColorHint="#546E7A"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/searchIcon"
+            app:layout_constraintStart_toEndOf="@id/mapSearchIcon"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ListView
-        android:id="@+id/productListView"
-        android:layout_width="0dp"
-        android:layout_height="731dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar"
-        tools:listitem="@layout/product_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

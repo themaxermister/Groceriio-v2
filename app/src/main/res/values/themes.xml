@@ -1,6 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.NewGroceriio" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.NewGroceriio" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:fontFamily">@font/avgardn</item>
+        <item name="fontFamily">@font/avgardn</item>
+
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
@@ -28,13 +31,4 @@
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_primaryInverse</item>
     </style>
-
-    <style name="Theme.NewGroceriio.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.NewGroceriio.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.NewGroceriio.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

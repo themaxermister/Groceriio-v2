@@ -16,10 +16,10 @@ public class ItemPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_page);
-        searchBar = findViewById(R.id.search_bar_cat);
-        reduceQuantity = findViewById(R.id.quantity_input_minus);
-        increaseQuantity = findViewById(R.id.quantity_input_plus);
-        quantityInput = findViewById(R.id.quantity_input);
+        setContentView(R.layout.product_page);
+        searchBar = findViewById(R.id.searchBarInput);
+        reduceQuantity = findViewById(R.id.productPgMinus);
+        increaseQuantity = findViewById(R.id.productPgPlus);
+        quantityInput = findViewById(R.id.productPgQuantInp);
     }
 }

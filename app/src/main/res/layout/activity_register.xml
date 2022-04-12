@@ -107,6 +107,7 @@
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:hint="@string/password"
+            android:inputType="textPassword"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -137,6 +138,7 @@
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:hint="@string/confirm_password"
+            android:inputType="numberPassword"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:text="Confirm Password" />

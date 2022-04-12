@@ -5,19 +5,31 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/divider_line.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.1515" />
+        <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_expand_more_24.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.1515" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1515" />
+        <entry key="app/src/main/res/drawable/ic_baseline_remove_24.xml" value="0.1515" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/ic_dest_circle_24.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1515" />
+        <entry key="app/src/main/res/drawable/input_box.xml" value="0.1515" />
+        <entry key="app/src/main/res/drawable/large_button.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/quantity_rectangle.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/record_circle.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/search_rectangle.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/vertical_dotted_line.xml" value="0.1555" />
         <entry key="app/src/main/res/layout/activity_collection_location.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_enter_address.xml" value="0.125" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.11" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.3877862548828125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.30416666666666664" />
         <entry key="app/src/main/res/layout/activity_nearest_store.xml" value="0.2509780883789063" />
-        <entry key="app/src/main/res/layout/activity_order_confirmation.xml" value="0.11" />
+        <entry key="app/src/main/res/layout/activity_order_confirmation.xml" value="0.14269653320312495" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.125" />
         <entry key="app/src/main/res/layout/activity_register_fail.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_register_success.xml" value="0.125" />

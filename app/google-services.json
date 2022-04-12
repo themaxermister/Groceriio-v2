@@ -1,71 +1,41 @@
 {
   "project_info": {
-    "project_number": "231084424042",
-    "firebase_url": "https://groceriio-default-rtdb.firebaseio.com",
-    "project_id": "groceriio",
-    "storage_bucket": "groceriio.appspot.com"
+    "project_number": "579418524784",
+    "project_id": "groceriio-v2",
+    "storage_bucket": "groceriio-v2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:231084424042:android:f7c4fefc0f068151c68313",
+        "mobilesdk_app_id": "1:579418524784:android:4faedff7a80e6c23f4b8b5",
         "android_client_info": {
-          "package_name": "com.example.groceriio"
+          "package_name": "com.example.newgroceriio"
         }
       },
       "oauth_client": [
         {
-          "client_id": "231084424042-m8n3bves0lqskprf36dk7uqu053o0q2p.apps.googleusercontent.com",
+          "client_id": "579418524784-s662mvgq2rtbi3k7pasti75t8qv6nap6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.groceriio",
+            "package_name": "com.example.newgroceriio",
             "certificate_hash": "39a6977665299a058851948846a89f1c13665250"
           }
         },
         {
-          "client_id": "231084424042-m1lvja6mc6ehq6o7261majr6cu83552s.apps.googleusercontent.com",
+          "client_id": "579418524784-ar6j178phs1iaumfn0th60tdp1q50mr9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAC_jVNGErv9LJDUIgzM01pt_yIJNrWROY"
+          "current_key": "AIzaSyArklsDbe5vVGhsyo6aTTFLcpPuRK4njFQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "231084424042-m1lvja6mc6ehq6o7261majr6cu83552s.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:231084424042:android:dd20877e3f77c236c68313",
-        "android_client_info": {
-          "package_name": "com.example.groceriioapp"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "231084424042-m1lvja6mc6ehq6o7261majr6cu83552s.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAC_jVNGErv9LJDUIgzM01pt_yIJNrWROY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "231084424042-m1lvja6mc6ehq6o7261majr6cu83552s.apps.googleusercontent.com",
+              "client_id": "579418524784-ar6j178phs1iaumfn0th60tdp1q50mr9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

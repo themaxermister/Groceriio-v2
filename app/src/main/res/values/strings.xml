@@ -12,6 +12,7 @@
     <string name="success_logo">Success Logo</string>
     <string name="back_to_login">Back to Login</string>
     <string name="title_activity_register_fail">RegisterFailActivity</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -58,4 +59,8 @@
     <string name="shopping_list">Shopping List</string>
     <string name="total_title">Total:</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="stock_title">Stock:</string>
+    <string name="home">Home</string>
+    <string name="log_out">Log Out</string>
+    <string name="categories">Categories</string>
 </resources>

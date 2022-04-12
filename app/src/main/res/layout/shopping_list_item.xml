@@ -83,7 +83,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <Button
-                        android:id="@+id/productPgMinus"
+                        android:id="@+id/listItemMinus"
                         style="@style/Widget.Material3.Button.Icon"
                         android:layout_width="48dp"
                         android:layout_height="0dp"
@@ -106,16 +106,16 @@
                         android:textAlignment="center"
                         android:textColor="#A1887F"
                         android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/productPgMinus"
+                        app:layout_constraintBottom_toBottomOf="@+id/listItemMinus"
                         app:layout_constraintDimensionRatio="h,1:1"
-                        app:layout_constraintEnd_toStartOf="@+id/productPgPlus"
+                        app:layout_constraintEnd_toStartOf="@+id/listItemPlus"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/productPgMinus"
-                        app:layout_constraintTop_toTopOf="@+id/productPgMinus"
+                        app:layout_constraintStart_toEndOf="@+id/listItemMinus"
+                        app:layout_constraintTop_toTopOf="@+id/listItemMinus"
                         tools:ignore="TextContrastCheck" />
 
                     <Button
-                        android:id="@+id/productPgPlus"
+                        android:id="@+id/listItemPlus"
                         style="@style/Widget.Material3.Button.Icon"
                         android:layout_width="48dp"
                         android:layout_height="0dp"

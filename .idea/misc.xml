@@ -41,9 +41,9 @@
         <entry key="app/src/main/res/layout/product_list_view.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/product_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/search_page.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/shopping_list_item.xml" value="0.23803736576248338" />
+        <entry key="app/src/main/res/layout/shopping_list_item.xml" value="0.18429260253906252" />
         <entry key="app/src/main/res/layout/shopping_list_item_view.xml" value="0.16490631103515627" />
-        <entry key="app/src/main/res/layout/shopping_list_page.xml" value="0.16054229736328127" />
+        <entry key="app/src/main/res/layout/shopping_list_page.xml" value="0.1" />
       </map>
     </option>
   </component>

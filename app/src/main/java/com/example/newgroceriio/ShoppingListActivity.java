@@ -15,12 +15,12 @@ public class ShoppingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_list_page);
 
-        mConfirmOrder = findViewById(R.id.confirm_order_btn);
+        mConfirmOrder = findViewById(R.id.shopListOrderBtn);
         mItemRemove = findViewById(R.id.listItemRemove);
         mItemPlus = findViewById(R.id.productPgPlus);
         mItemMinus = findViewById(R.id.productPgMinus);
 
-        mTotalCost = findViewById(R.id.total_amaount);
+        mTotalCost = findViewById(R.id.shopListTotalCost);
 
     }
 }

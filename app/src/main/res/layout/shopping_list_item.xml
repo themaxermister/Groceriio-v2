@@ -13,6 +13,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -20,7 +21,6 @@
                 android:id="@+id/constraintLayout2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -30,120 +30,119 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="14dp"
-                    android:text="Product Name"
-                    android:textSize="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/product_name"
+                    android:textSize="20sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/listItemRemove"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/listItemRemove"
                     style="@style/Widget.Material3.Button.Icon"
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/ic_baseline_close_24"
-                    app:layout_constraintBottom_toBottomOf="@+id/listItemName"
+                    android:contentDescription="@string/delete_item"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/listItemName" />
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="0dp"
-                android:layout_height="104dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/constraintLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
+                <ImageView
+                    android:id="@+id/listItemImage"
+                    android:layout_width="100dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="@string/product_image"
+                    android:src="@drawable/groceriio_logo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="h,1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout3"
+                    android:id="@+id/linearLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:orientation="horizontal"
+                    android:paddingVertical="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/listItemImage"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:id="@+id/listItemImage"
-                        android:layout_width="100dp"
+                    <Button
+                        android:id="@+id/productPgMinus"
+                        style="@style/Widget.Material3.Button.Icon"
+                        android:layout_width="48dp"
                         android:layout_height="0dp"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/groceriio_logo"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_baseline_remove_24"
+                        android:contentDescription="@string/minus_sign"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="h,1:1"
+                        app:layout_constraintEnd_toStartOf="@+id/listItemQuant"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/linearLayout3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:orientation="horizontal"
-                        android:paddingVertical="10dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/listItemImage">
+                    <TextView
+                        android:id="@+id/listItemQuant"
+                        android:layout_width="50dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/quantity_rectangle"
+                        android:gravity="center"
+                        android:text="@string/int_input"
+                        android:textAlignment="center"
+                        android:textColor="#A1887F"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/productPgMinus"
+                        app:layout_constraintDimensionRatio="h,1:1"
+                        app:layout_constraintEnd_toStartOf="@+id/productPgPlus"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/productPgMinus"
+                        app:layout_constraintTop_toTopOf="@+id/productPgMinus"
+                        tools:ignore="TextContrastCheck" />
 
-                        <Button
-                            android:id="@+id/productPgMinus"
-                            style="@style/Widget.Material3.Button.Icon"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/ic_baseline_remove_24"
-                            app:layout_constraintEnd_toStartOf="@+id/listItemQuant"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            tools:layout_editor_absoluteY="11dp" />
-
-                        <TextView
-                            android:id="@+id/listItemQuant"
-                            android:layout_width="50dp"
-                            android:layout_height="0dp"
-                            android:background="@drawable/quantity_rectangle"
-                            android:gravity="center"
-                            android:text="@string/int_input"
-                            android:textAlignment="center"
-                            android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/productPgMinus"
-                            app:layout_constraintDimensionRatio="h,1:1"
-                            app:layout_constraintEnd_toStartOf="@+id/productPgPlus"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/productPgMinus"
-                            app:layout_constraintTop_toTopOf="@+id/productPgMinus" />
-
-                        <Button
-                            android:id="@+id/productPgPlus"
-                            style="@style/Widget.Material3.Button.Icon"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/ic_baseline_add_24"
-                            app:layout_constraintBottom_toBottomOf="@+id/listItemQuant"
-                            app:layout_constraintEnd_toStartOf="@+id/listItemQuant"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/listItemQuant"
-                            app:layout_constraintTop_toTopOf="@+id/listItemQuant" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <Button
+                        android:id="@+id/productPgPlus"
+                        style="@style/Widget.Material3.Button.Icon"
+                        android:layout_width="48dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_baseline_add_24"
+                        android:contentDescription="@string/plus_sign"
+                        app:layout_constraintBottom_toBottomOf="@+id/listItemQuant"
+                        app:layout_constraintEnd_toStartOf="@+id/listItemQuant"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/listItemQuant"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/listItemPrice"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="@string/price_input"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/listItemPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/price_input"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout3" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

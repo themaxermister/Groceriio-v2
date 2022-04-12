@@ -29,11 +29,12 @@
             android:id="@+id/productCatTitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/avgardn"
             android:text="@string/category_name"
             android:textAlignment="center"
             android:textColor="@color/md_theme_light_onBackground"
-            android:textSize="25sp"
+            android:textSize="23sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,14 +43,29 @@
             app:layout_constraintTop_toBottomOf="@+id/productCatBackBtn" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/collectDivider4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/divider"
+        app:layout_constraintBottom_toTopOf="@+id/productListView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productCatTopBar"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/divider_line"
+        tools:ignore="ImageContrastCheck" />
+
     <ListView
         android:id="@+id/productListView"
         android:layout_width="0dp"
-        android:layout_height="731dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/productCatTopBar"
         tools:listitem="@layout/product_list_item" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,7 +33,6 @@
     <string name="address">Address</string>
     <string name="current_address">Current address</string>
     <string name="destination_address">Destination address</string>
-    <string name="confirm_order">Confirm Order</string>
     <string name="divider">Divider</string>
     <string name="product_details">Product Details</string>
     <string name="search_icon">Search Icon</string>
@@ -47,7 +46,6 @@
     <string name="category_name">Category Name</string>
     <string name="product_name">Product Name</string>
     <string name="metric">Metric</string>
-    <string name="metric">Metric</string>
     <string name="brand">Brand</string>
     <string name="nutrition">Nutrition</string>
     <string name="nutrition_info">Nutrition Info</string>
@@ -55,4 +53,8 @@
     <string name="product_image">Product Image</string>
     <string name="plus_sign">Plus Sign</string>
     <string name="minus_sign">Minus Sign</string>
+    <string name="delete_item">Delete Item</string>
+    <string name="confirm_order">Confirm Order</string>
+    <string name="shopping_list">Shopping List</string>
+    <string name="total_title">Total:</string>
 </resources>

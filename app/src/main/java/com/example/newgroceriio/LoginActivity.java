@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     Handler handler = new Handler();
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth fAuth;
 
     @Override
     public void onStart() {
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         mLoginPasswordInput = findViewById(R.id.loginPasswordInput);
         mLoginBtn = findViewById(R.id.loginBtn);
         mLoginRegisterBtn = findViewById(R.id.loginRegisterBtn);
-        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        fAuth = FirebaseAuth.getInstance();
 
         /*if (fAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -78,7 +78,8 @@ public class LoginActivity extends AppCompatActivity {
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+
+                        if (task.isSuccessful() && fAuth.getCurrentUser().isEmailVerified()) {
 
                             Toast.makeText(
                                     LoginActivity.this,
@@ -88,10 +89,22 @@ public class LoginActivity extends AppCompatActivity {
 
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
-                        } else {
-                            // mLoginMsg.setText("Unsuccessful log in. Please try again.");
-                            // mLoginMsg.setVisibility(view.VISIBLE);
+                        }
+                        else if (!fAuth.getCurrentUser().isEmailVerified() ){
 
+                            Toast.makeText(
+                                    LoginActivity.this,
+                                    "User email not verified",
+                                    Toast.LENGTH_SHORT)
+                                    .show();
+
+                            handler.postDelayed(new Runnable() {
+                                public void run() {
+                                    startActivity(new Intent(LoginActivity.this, VerifyEmailActivity.class));
+                                }
+                            }, 1000);   //3 seconds
+                        }
+                        else {
                             Toast.makeText(
                                     LoginActivity.this,
                                     "Error! " + task.getException().getMessage(),

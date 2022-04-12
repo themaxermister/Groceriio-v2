@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewGroceriio">
         <activity
+            android:name=".VerifyEmailActivity"
+            android:parentActivityName=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".NearestStoreActivity"
             android:exported="false" />
         <activity

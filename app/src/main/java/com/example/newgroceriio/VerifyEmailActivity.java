@@ -35,12 +35,10 @@ public class VerifyEmailActivity extends AppCompatActivity{
         mResendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 mResendBtn.setEnabled(false);
 
                 // Send VERIFICATION LINK
                 mHandler.postDelayed(mToastRunnable, 5000);
-
 
                 fAuth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -48,9 +46,11 @@ public class VerifyEmailActivity extends AppCompatActivity{
                         //Toast message below that informs user that verification email sent
                         Toast.makeText(VerifyEmailActivity.this, "Verification email has been sent.", Toast.LENGTH_SHORT).show();
                     }
+
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+//                                    log.d(TAG,"onFailure: Email not sent" + e.getMessage());
                         Log.d("this is a tag?", "onFailure: Email not sent" + e.getMessage());
                     }
                 });

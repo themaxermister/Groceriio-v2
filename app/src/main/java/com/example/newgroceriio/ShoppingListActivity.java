@@ -1,6 +1,8 @@
 package com.example.newgroceriio;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,6 +26,12 @@ public class ShoppingListActivity extends AppCompatActivity {
         mListItemPrice = findViewById(R.id.listItemPrice);
         mShopListTotalCost = findViewById(R.id.shopListTotalCost);
 
+        mShopListBackBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        });
 
 
     }

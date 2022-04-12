@@ -32,8 +32,9 @@
         <entry key="app/src/main/res/layout/activity_nearest_store.xml" value="0.26710815429687507" />
         <entry key="app/src/main/res/layout/activity_order_confirmation.xml" value="0.14269653320312495" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.17225799560546878" />
-        <entry key="app/src/main/res/layout/activity_register_fail.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_register_fail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_register_success.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/activity_verify_email.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/item_page.xml" value="0.25" />
         <entry key="app/src/main/res/layout/product_list.xml" value="0.27924346923828125" />
         <entry key="app/src/main/res/layout/product_list_activity.xml" value="0.18494018554687502" />

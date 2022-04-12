@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             handler.postDelayed(new Runnable() {
                                 public void run() {
-                                    startActivity(new Intent(LoginActivity.this, VerifyEmailActivity.class));
+                                    startActivity(new Intent(LoginActivity.this, RegisterFailActivity.class));
                                 }
                             }, 1000);   //3 seconds
                         }

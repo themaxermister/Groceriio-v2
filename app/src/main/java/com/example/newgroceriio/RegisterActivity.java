@@ -8,21 +8,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
     TextInputEditText mRegisterNameInput, mRegisterEmailInput, mRegisterPasswordInput, mRegisterPasswordInput2;
     Button mRegisterBtn, mRegisterBackBtn;
+
     FirebaseAuth fAuth;
+    User mUserObj;
+    boolean mVerify;
+    FirebaseDatabase database;
+    DatabaseReference mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +49,9 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterBackBtn = findViewById(R.id.registerBackBtn);
 
         fAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference("users");
+
         Handler handler = new Handler();
 
         mRegisterBackBtn.setOnClickListener(new View.OnClickListener() {
@@ -49,9 +64,13 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String name = mRegisterNameInput.getText().toString().trim();
                 String email = mRegisterEmailInput.getText().toString().trim();
                 String password1 = mRegisterPasswordInput.getText().toString().trim();
                 String password2 = mRegisterPasswordInput2.getText().toString().trim();
+
+                mUserObj = new User(name, email, mVerify);
+
 
                 if (TextUtils.isEmpty(email)){
                     mRegisterEmailInput.setError("Email required.");
@@ -88,7 +107,29 @@ public class RegisterActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT)
                                     .show();
 
-                            startActivity(new Intent(getApplicationContext(), RegisterSuccessActivity.class));
+                            FirebaseUser mUserObj = fAuth.getCurrentUser();
+                            updateUI(mUserObj);
+
+                            handler.postDelayed(new Runnable() {
+                                public void run() {
+                                    startActivity(new Intent(getApplicationContext(), RegisterSuccessActivity.class));
+                                }
+                            }, 1000);
+
+                            // Send VERIFICATION LINK
+                            fAuth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    //Toast message below that informs user that verification email sent
+                                    Toast.makeText(RegisterActivity.this, "Verification email has been sent.", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+//                                    log.d(TAG,"onFailure: Email not sent" + e.getMessage());
+                                    Log.d("this is a tag?", "onFailure: Email not sent" + e.getMessage());
+                                }
+                            });
                         }
                         else {
                             Toast.makeText(
@@ -102,5 +143,12 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+    }
+    //    // Adding user information to database and redirect to login screen
+    public void updateUI(FirebaseUser currentUser) {
+        String keyId = mDatabase.push().getKey();
+        mDatabase.child(keyId).setValue(mUserObj); //adding user info to database
+        Intent loginIntent = new Intent(this, RegisterActivity.class);
+        startActivity(loginIntent);
     }
 }

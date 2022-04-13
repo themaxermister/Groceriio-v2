@@ -45,22 +45,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements CategoryAdapter.OnCategoryListener{
-    NavigationBarView mHomeNavBar;
+    private NavigationBarView mHomeNavBar;
 
-    TextView userFullName;
-    FirebaseAuth fAuth;
-    FirebaseDatabase database;
-    DatabaseReference mDatabase, productsRef;
-
-    private SharedPreferences mPreferences;
+    private TextView userFullName;
+    private DatabaseReference productsRef;
 
     private RecyclerView recyclerView;
-    HashSet<String> categoryTypes;
-    ArrayList<Category> categories;
-    CategoryAdapter adapter;
-    SharedPreferences sharedPreferences;
+    private HashSet<String> categoryTypes;
+    private ArrayList<Category> categories;
+    private CategoryAdapter adapter;
+    private SharedPreferences sharedPreferences;
 
-    DatabaseReference storeRef;
+    private DatabaseReference storeRef;
     private List<String> locationsList;
     private LocationRequest locationRequest;
     public static final int REQUEST_CHECK_SETTING = 1001;
@@ -138,54 +134,22 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         });
 
         Intent intent = getIntent();
-        String emailFrmLogin = intent.getStringExtra("email");
+        String name = intent.getStringExtra("name");
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("name", name);
+        editor.apply();
 
-
-        fAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        mDatabase = database.getReference("users_data");
+        // Store to preference instead of depending on intent from login activity
+        String stored_name = sharedPreferences.getString("name", "");
 
         userFullName = findViewById(R.id.homeUserName);
-        sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this);
-        String name = sharedPreferences.getString("name", null);
-        if(name != null){
-            userFullName.setText("Welcome, " + name);
-        }
-
-        // Retrieve User name
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot s: snapshot.getChildren()){
-                    String email = s.child("email").getValue(String.class);
-                    if(name == null){
-                        if(emailFrmLogin.equals(email)){
-                            String name = s.child("name").getValue(String.class);
-                            Toast.makeText(
-                                    MainActivity.this,
-                                    "Found Username",
-                                    Toast.LENGTH_SHORT)
-                                    .show();
-                            storeNameToSharePreference(name);
-                            userFullName.setText("Welcome, " + name);
-                        }
-                    }
+        userFullName.setText("Welcome, " + stored_name);
 
 
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        productsRef = database.getReference("product_data");
+        productsRef = FirebaseDatabase.getInstance().getReference("product_data");
         categories = new ArrayList<>();
         categoryTypes = new HashSet<>();
 
@@ -211,12 +175,6 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
 
 
-    }
-
-    private void storeNameToSharePreference(String name){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("name", name);
-        editor.apply();
     }
 
     private void loadToCardView(){

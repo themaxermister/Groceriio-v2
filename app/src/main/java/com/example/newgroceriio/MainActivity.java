@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     HashSet<String> categoryTypes;
     ArrayList<Category> categories;
     CategoryAdapter adapter;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,34 +77,34 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
 
 
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("email", emailFrmLogin);
-        editor.apply();
-
-        String emailFinal = sharedPreferences.getString("email", "default value");
 
         fAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("users_data");
 
         userFullName = findViewById(R.id.homeUserName);
+        sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        String name = sharedPreferences.getString("name", "default value");
+        if(name != null){
+            userFullName.setText("Welcome, " + name);
+        }
 
         // Retrieve User name
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot s: snapshot.getChildren()){
-                    String name = s.child("name").getValue(String.class);
                     String email = s.child("email").getValue(String.class);
-                    if(emailFinal.equals(email)){
-                        userFullName.setText("Welcome, " + name);
+                    if(emailFrmLogin.equals(email)){
+                        String name = s.child("name").getValue(String.class);
                         Toast.makeText(
                                 MainActivity.this,
                                 "Found Username",
                                 Toast.LENGTH_SHORT)
                                 .show();
+                        storeNameToSharePreference(name);
+                        userFullName.setText("Welcome, " + name);
                     }
 
                 }
@@ -142,6 +143,12 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
 
 
+    }
+
+    private void storeNameToSharePreference(String name){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("name", name);
+        editor.apply();
     }
 
     private void loadToCardView(){

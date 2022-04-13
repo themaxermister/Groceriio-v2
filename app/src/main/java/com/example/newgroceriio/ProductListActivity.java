@@ -2,6 +2,8 @@ package com.example.newgroceriio;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.newgroceriio.Adapters.ProductAdapter;
 import com.example.newgroceriio.Models.Product;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,11 +37,16 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
     ArrayList<Product> productList;
     private ProductAdapter adapter;
     private RecyclerView recyclerView;
+    private TextInputLayout textInputLayout;
+    private String searchInput;
+    private TextInputEditText mInputSearch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_list_activity);
+        mInputSearch = findViewById(R.id.searchBarInput);
         mProductBackBtn = findViewById(R.id.productListBackBtn);
         mProductTitleText = findViewById(R.id.productListTitleText);
         recyclerView = findViewById(R.id.productRecyclerView);
@@ -82,6 +90,27 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
                 finish();
             }
         });
+
+
+        mInputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                System.out.println("below is text value");
+                System.out.println(String.valueOf(charSequence));
+                adapter.getFilter().filter(String.valueOf(charSequence));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+//                searchInput = textInputLayout.getEditText().getText().toString().trim();
+//                adapter.getFilter().filter(searchInput);
+            }
+        });
     }
 
     private void loadToCardView(){
@@ -95,4 +124,8 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
     public void onProductClick(int position) {
 
     }
+
+
+
+
 }

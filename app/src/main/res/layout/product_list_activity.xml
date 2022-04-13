@@ -58,6 +58,41 @@
         app:srcCompat="@drawable/divider_line"
         tools:ignore="ImageContrastCheck" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/productListSearchBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productListTopBar">
+
+        <Button
+            android:id="@+id/searchIcon"
+            style="@style/Widget.Material3.Button.Icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_baseline_search_24"
+            android:contentDescription="@string/search_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/searchBarInput"
+            app:layout_constraintEnd_toStartOf="@+id/searchBarInput"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/searchBarInput" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/searchBarInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:hint="@string/search_input"
+            android:minHeight="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/searchIcon"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ListView
         android:id="@+id/productListView"
         android:layout_width="0dp"
@@ -65,7 +100,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productListTopBar"
+        app:layout_constraintTop_toBottomOf="@+id/productListSearchBar"
         tools:listitem="@layout/product_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

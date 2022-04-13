@@ -152,6 +152,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         Intent intent = new Intent(MainActivity.this, ProductListActivity.class);
 
         intent.putExtra("type", c.getCategoryType());
+        System.out.println("Belwo is catergory type");
+        System.out.println(c.getCategoryType());
         startActivity(intent);
 
     }

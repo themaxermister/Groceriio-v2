@@ -50,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        mDatabase = database.getReference("users");
+        mDatabase = database.getReference("users_data");
 
         Handler handler = new Handler();
 

@@ -3,6 +3,8 @@ package com.example.newgroceriio.Models;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.math.BigDecimal;
+
 public class Product {
 
     private String ProductId;
@@ -15,7 +17,7 @@ public class Product {
     private String Metric;
     private String Country;
     private String ImgUrl;
-    double Price;
+    private double Price;
 
     public Product(){
 
@@ -115,8 +117,11 @@ public class Product {
     }
 
     public double getPrice() {
-        return Price;
+        BigDecimal p = new BigDecimal(this.Price);
+        p = p.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        return p.doubleValue();
     }
+
 
     public void setPrice(double price) {
         Price = price;

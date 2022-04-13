@@ -96,16 +96,19 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot s: snapshot.getChildren()){
                     String email = s.child("email").getValue(String.class);
-                    if(emailFrmLogin.equals(email)){
-                        String name = s.child("name").getValue(String.class);
-                        Toast.makeText(
-                                MainActivity.this,
-                                "Found Username",
-                                Toast.LENGTH_SHORT)
-                                .show();
-                        storeNameToSharePreference(name);
-                        userFullName.setText("Welcome, " + name);
+                    if(name == null){
+                        if(emailFrmLogin.equals(email)){
+                            String name = s.child("name").getValue(String.class);
+                            Toast.makeText(
+                                    MainActivity.this,
+                                    "Found Username",
+                                    Toast.LENGTH_SHORT)
+                                    .show();
+                            storeNameToSharePreference(name);
+                            userFullName.setText("Welcome, " + name);
+                        }
                     }
+
 
                 }
             }

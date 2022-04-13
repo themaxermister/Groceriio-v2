@@ -2,6 +2,8 @@ package com.example.newgroceriio;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.newgroceriio.Adapters.ProductAdapter;
 import com.example.newgroceriio.Models.Product;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,26 +31,30 @@ import java.util.List;
 public class ProductListActivity extends AppCompatActivity implements ProductAdapter.OnProductListener{
     Button mProductBackBtn;
     TextView mProductTitleText;
-    RecyclerView mProductRecyclerView;
 
     DatabaseReference ref;
     DatabaseReference productsRef;
     ArrayList<Product> productList;
     private ProductAdapter adapter;
     private RecyclerView recyclerView;
+    private TextInputEditText mInputSearch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_list_activity);
+        mInputSearch = findViewById(R.id.searchBarInput);
         mProductBackBtn = findViewById(R.id.productListBackBtn);
         mProductTitleText = findViewById(R.id.productListTitleText);
-        mProductRecyclerView = findViewById(R.id.productRecyclerView);
         recyclerView = findViewById(R.id.productRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        String type = "Household";
+
+        Intent intent = getIntent();
+        String type = intent.getStringExtra("type");
+        mProductTitleText.setText(type);
         productList = new ArrayList<>();
 
         // Database Ref
@@ -75,10 +82,29 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         });
 
 
-        mProductBackBtn.setOnClickListener(new View.OnClickListener(){
+        mProductBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+        });
+
+
+        // Search Products
+        mInputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.getFilter().filter(String.valueOf(charSequence));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Do nothing
             }
         });
     }
@@ -94,4 +120,8 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
     public void onProductClick(int position) {
 
     }
+
+
+
+
 }

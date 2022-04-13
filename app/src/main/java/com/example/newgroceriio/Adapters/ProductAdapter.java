@@ -41,6 +41,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
             @Override
             protected FilterResults performFiltering(CharSequence charSequence){
                 System.out.println("performFiltering: " + charSequence.toString());
+                for (int i = 0; i< allProducts.size(); i++){
+                    System.out.println(allProducts.get(i).getProductName());
+                }
                 ArrayList<Product> filteredList = new ArrayList<Product>();
 
                 if (charSequence.length() == 0){

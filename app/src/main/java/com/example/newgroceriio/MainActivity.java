@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         userFullName = findViewById(R.id.homeUserName);
         sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
-        String name = sharedPreferences.getString("name", "default value");
+        String name = sharedPreferences.getString("name", null);
         if(name != null){
             userFullName.setText("Welcome, " + name);
         }

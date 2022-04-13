@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Admin/Groceriio-v2/app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/divider_line.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1515" />
@@ -13,6 +12,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_expand_more_24.xml" value="0.1515" />
+        <entry key="app/src/main/res/drawable/ic_baseline_keyboard_arrow_right_24.xml" value="0.116" />
         <entry key="app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1515" />
@@ -37,6 +37,7 @@
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.17225799560546878" />
         <entry key="app/src/main/res/layout/activity_register_fail.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_register_success.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/category_list_item.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/item_page.xml" value="0.25" />
         <entry key="app/src/main/res/layout/product_list.xml" value="0.27924346923828125" />
         <entry key="app/src/main/res/layout/product_list_activity.xml" value="0.18494018554687502" />

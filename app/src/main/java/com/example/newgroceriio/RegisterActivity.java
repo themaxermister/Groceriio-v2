@@ -148,7 +148,5 @@ public class RegisterActivity extends AppCompatActivity {
     public void updateUI(FirebaseUser currentUser) {
         String keyId = mDatabase.push().getKey();
         mDatabase.child(keyId).setValue(mUserObj); //adding user info to database
-        Intent loginIntent = new Intent(this, RegisterActivity.class);
-        startActivity(loginIntent);
     }
 }

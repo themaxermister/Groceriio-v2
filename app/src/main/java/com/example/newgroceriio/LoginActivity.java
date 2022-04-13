@@ -79,37 +79,48 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if (task.isSuccessful() && fAuth.getCurrentUser().isEmailVerified()) {
 
+                        if(fAuth.getCurrentUser() == null){
                             Toast.makeText(
                                     LoginActivity.this,
-                                    "User logged in successfully",
+                                    "Please register an account",
                                     Toast.LENGTH_SHORT)
                                     .show();
-
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
                         }
-                        else if (!fAuth.getCurrentUser().isEmailVerified() ){
+                        else{
+                            if (task.isSuccessful() && fAuth.getCurrentUser().isEmailVerified()) {
 
-                            Toast.makeText(
-                                    LoginActivity.this,
-                                    "User email not verified",
-                                    Toast.LENGTH_SHORT)
-                                    .show();
+                                Toast.makeText(
+                                        LoginActivity.this,
+                                        "User logged in successfully",
+                                        Toast.LENGTH_SHORT)
+                                        .show();
 
-                            handler.postDelayed(new Runnable() {
-                                public void run() {
-                                    startActivity(new Intent(LoginActivity.this, RegisterFailActivity.class));
-                                }
-                            }, 1000);   //3 seconds
-                        }
-                        else {
-                            Toast.makeText(
-                                    LoginActivity.this,
-                                    "Error! " + task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT)
-                                    .show();
+                                //if else here to check if email verfied
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+                            }
+                            else if (task.isSuccessful() && !fAuth.getCurrentUser().isEmailVerified() ){
+
+                                Toast.makeText(
+                                        LoginActivity.this,
+                                        "User email not verified",
+                                        Toast.LENGTH_SHORT)
+                                        .show();
+
+                                handler.postDelayed(new Runnable() {
+                                    public void run() {
+                                        startActivity(new Intent(LoginActivity.this, RegisterFailActivity.class));
+                                    }
+                                }, 1000);   //3 seconds
+                            }
+                            else {
+                                Toast.makeText(
+                                        LoginActivity.this,
+                                        "Error! " + task.getException().getMessage(),
+                                        Toast.LENGTH_SHORT)
+                                        .show();
+                            }
                         }
                     }
                 });

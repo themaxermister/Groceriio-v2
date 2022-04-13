@@ -1,5 +1,7 @@
 package com.example.newgroceriio;
 
+import static android.content.Intent.EXTRA_EMAIL;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        String emailFrmLogin = intent.getStringExtra("email");
 
         fAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -43,8 +47,17 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot s: snapshot.getChildren()){
                     String name = s.child("name").getValue(String.class);
+                    String email = s.child("email").getValue(String.class);
+                    if(emailFrmLogin.equals(email)){
+                        userFullName.setText(name);
+                    }else {
+                        Toast.makeText(
+                                MainActivity.this,
+                                "Cannot Find User Name",
+                                Toast.LENGTH_SHORT)
+                                .show();
+                    }
 
-                    userFullName.setText(name);
                 }
             }
 

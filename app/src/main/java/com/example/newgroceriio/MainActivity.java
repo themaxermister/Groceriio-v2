@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     FirebaseDatabase database;
     DatabaseReference mDatabase, productsRef;
 
+    private SharedPreferences mPreferences;
+
     private RecyclerView recyclerView;
     HashSet<String> categoryTypes;
     ArrayList<Category> categories;
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                         startActivity(new Intent(getApplicationContext(), NearestStoreActivity.class));
                         break;
                     case R.id.cartPage:
-                        startActivity(new Intent(getApplicationContext(), ShoppingListActivity.class));
+//                        startActivity(new Intent(getApplicationContext(), ShoppingListActivity.class));
                         break;
                     case R.id.logOut:
                         Toast.makeText(MainActivity.this, "Logged out.", Toast.LENGTH_SHORT).show();
@@ -70,10 +74,19 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         Intent intent = getIntent();
         String emailFrmLogin = intent.getStringExtra("email");
 
+
+
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email", emailFrmLogin);
+        editor.apply();
+
+        String emailFinal = sharedPreferences.getString("email", "default value");
+
         fAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("users_data");
-
 
         userFullName = findViewById(R.id.homeUserName);
 
@@ -84,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                 for(DataSnapshot s: snapshot.getChildren()){
                     String name = s.child("name").getValue(String.class);
                     String email = s.child("email").getValue(String.class);
-                    if(emailFrmLogin.equals(email)){
+                    if(emailFinal.equals(email)){
                         userFullName.setText("Welcome, " + name);
                         Toast.makeText(
                                 MainActivity.this,
@@ -152,8 +165,6 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         Intent intent = new Intent(MainActivity.this, ProductListActivity.class);
 
         intent.putExtra("type", c.getCategoryType());
-        System.out.println("Belwo is catergory type");
-        System.out.println(c.getCategoryType());
         startActivity(intent);
 
     }

@@ -28,7 +28,6 @@ import java.util.List;
 public class ProductListActivity extends AppCompatActivity implements ProductAdapter.OnProductListener{
     Button mProductBackBtn;
     TextView mProductTitleText;
-    RecyclerView mProductRecyclerView;
 
     DatabaseReference ref;
     DatabaseReference productsRef;
@@ -42,10 +41,8 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         setContentView(R.layout.product_list_activity);
         mProductBackBtn = findViewById(R.id.productListBackBtn);
         mProductTitleText = findViewById(R.id.productListTitleText);
-        mProductRecyclerView = findViewById(R.id.productRecyclerView);
         recyclerView = findViewById(R.id.productRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
 
 

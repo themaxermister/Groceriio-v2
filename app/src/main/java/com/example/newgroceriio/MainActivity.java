@@ -1,7 +1,5 @@
 package com.example.newgroceriio;
 
-import static android.content.Intent.EXTRA_EMAIL;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newgroceriio.Adapters.CategoryAdapter;
-import com.example.newgroceriio.Adapters.ProductAdapter;
 import com.example.newgroceriio.Models.Category;
 import com.example.newgroceriio.Models.Product;
 import com.google.android.material.navigation.NavigationBarView;
@@ -27,8 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity implements CategoryAdapter.OnCategoryListener{
     NavigationBarView mHomeNavBar;
@@ -39,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     DatabaseReference mDatabase, productsRef;
 
     private RecyclerView recyclerView;
+    HashSet<String> categoryTypes;
     ArrayList<Category> categories;
     CategoryAdapter adapter;
 
@@ -53,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.homePage:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         break;
                     case R.id.mapPage:
                         startActivity(new Intent(getApplicationContext(), NearestStoreActivity.class));
@@ -109,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
         productsRef = database.getReference("product_data");
         categories = new ArrayList<>();
+        categoryTypes = new HashSet<>();
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -118,9 +115,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot s: snapshot.getChildren()){
                     Product product = s.getValue(Product.class);
-                    Category c = new Category();
-                    c.setCategoryType(product.getProductType());
-                    categories.add(c);
+                    categoryTypes.add(product.getProductType());
+
                 }
                 loadToCardView();
             }
@@ -136,6 +132,11 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     }
 
     private void loadToCardView(){
+        for(String type : categoryTypes){
+            Category c = new Category();
+            c.setCategoryType(type);
+            categories.add(c);
+        }
         adapter = new CategoryAdapter(this, categories, this);
         recyclerView.setAdapter(adapter);
 

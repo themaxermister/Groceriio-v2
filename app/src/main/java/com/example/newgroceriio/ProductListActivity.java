@@ -37,8 +37,6 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
     ArrayList<Product> productList;
     private ProductAdapter adapter;
     private RecyclerView recyclerView;
-    private TextInputLayout textInputLayout;
-    private String searchInput;
     private TextInputEditText mInputSearch;
 
 
@@ -92,6 +90,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         });
 
 
+        // Search Products
         mInputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -100,15 +99,12 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                System.out.println("below is text value");
-                System.out.println(String.valueOf(charSequence));
                 adapter.getFilter().filter(String.valueOf(charSequence));
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-//                searchInput = textInputLayout.getEditText().getText().toString().trim();
-//                adapter.getFilter().filter(searchInput);
+                // Do nothing
             }
         });
     }

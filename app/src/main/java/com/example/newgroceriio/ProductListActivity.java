@@ -47,7 +47,11 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        String type = "Household";
+
+
+        Intent intent = getIntent();
+        String type = intent.getStringExtra("type");
+        mProductTitleText.setText(type);
         productList = new ArrayList<>();
 
         // Database Ref
@@ -75,10 +79,10 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         });
 
 
-        mProductBackBtn.setOnClickListener(new View.OnClickListener(){
+        mProductBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
             }
         });
     }

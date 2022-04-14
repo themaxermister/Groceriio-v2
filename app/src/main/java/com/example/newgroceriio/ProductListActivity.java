@@ -119,6 +119,17 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
     @Override
     public void onProductClick(int position) {
 
+        Intent intent = new Intent(ProductListActivity.this, ProductPageActivity.class);
+        Product p = productList.get(position);
+
+        intent.putExtra("product_name", p.getProductName());
+        intent.putExtra("product_brand", p.getProductBrand());
+        intent.putExtra("product_metric", p.getMetric());
+        intent.putExtra("product_price", String.valueOf(p.getPrice()));
+        intent.putExtra("product_url", p.getImgUrl());
+        startActivity(intent);
+
+
     }
 
 

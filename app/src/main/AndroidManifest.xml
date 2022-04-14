@@ -24,6 +24,9 @@
             android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
+            android:name=".ProductPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".VerifyEmailActivity"
             android:parentActivityName=".LoginActivity"
             android:exported="false" />

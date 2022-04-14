@@ -18,20 +18,27 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextInputEditText mLoginEmailInput, mLoginPasswordInput;
-    Button mLoginBtn, mLoginRegisterBtn;
+    private TextInputEditText mLoginEmailInput, mLoginPasswordInput;
+    private Button mLoginBtn, mLoginRegisterBtn;
 
     /*
     mLoginMsg = findViewById(R.id.loginAccessMsg);
     mLoginMsg.setVisibility(View.GONE);
     mLoginMsg.setText("");
      */
-    Handler handler = new Handler();
+    private Handler handler = new Handler();
 
     private FirebaseAuth fAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference mDatabase;
 
     @Override
     public void onStart() {
@@ -57,11 +64,13 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }*/
 
+        final String[] name = new String[1];
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = mLoginEmailInput.getText().toString().trim();
                 String password = mLoginPasswordInput.getText().toString().trim();
+
 
                 if (TextUtils.isEmpty(email)){
                     mLoginEmailInput.setError("Email required.");
@@ -96,9 +105,33 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.LENGTH_SHORT)
                                         .show();
 
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("email", fAuth.getCurrentUser().getEmail());
-                                startActivity(intent);
+                                fAuth = FirebaseAuth.getInstance();
+                                database = FirebaseDatabase.getInstance();
+                                mDatabase = database.getReference("users_data");
+
+                                // Retrieve User name
+                                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for(DataSnapshot s: snapshot.getChildren()){
+                                            String email = s.child("email").getValue(String.class);
+                                            if(email.equals(fAuth.getCurrentUser().getEmail())){
+                                                name[0] = s.child("name").getValue(String.class);
+                                            }
+                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                            intent.putExtra("name", name[0]);
+                                            startActivity(intent);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+
 
                             }
                             else if (task.isSuccessful() && !fAuth.getCurrentUser().isEmailVerified() ){

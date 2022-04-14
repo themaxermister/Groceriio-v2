@@ -5,10 +5,20 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        tools:context=".NearestStoreActivity" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mapSearchTopBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#fff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
+        android:background="#fff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mapSearchTopBar">
@@ -71,6 +82,8 @@
             android:hint="@string/search_location"
             android:minHeight="48dp"
             android:textColorHint="#546E7A"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/mapSearchIcon"

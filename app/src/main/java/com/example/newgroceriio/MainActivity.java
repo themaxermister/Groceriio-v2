@@ -3,13 +3,18 @@ package com.example.newgroceriio;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -28,6 +33,8 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
@@ -44,7 +51,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements CategoryAdapter.OnCategoryListener{
+public class MainActivity extends AppCompatActivity implements CategoryAdapter.OnCategoryListener {
     private NavigationBarView mHomeNavBar;
 
     private TextView userFullName;
@@ -54,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     private HashSet<String> categoryTypes;
     private ArrayList<Category> categories;
     private CategoryAdapter adapter;
-    private SharedPreferences sharedPreferences;
 
     private DatabaseReference storeRef;
     private List<String> locationsList;
@@ -62,12 +68,26 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     public static final int REQUEST_CHECK_SETTING = 1001;
     private static boolean mLocationBool = false;
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    private FusedLocationProviderClient locClient;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+
     private String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = sharedPreferences.edit();
+        getDeviceLocation();
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        String uid = intent.getStringExtra("uid");
 
         mHomeNavBar = findViewById(R.id.homeNavBar);
         mHomeNavBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -100,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                                     startActivityPage();
                                     Toast.makeText(MainActivity.this, "Gps is on", Toast.LENGTH_SHORT).show();
                                 } catch (ApiException e) {
-                                    switch(e.getStatusCode()){
+                                    switch (e.getStatusCode()) {
                                         case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
 
                                             try {
@@ -121,7 +141,9 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                         });
                         break;
                     case R.id.cartPage:
-//                        startActivity(new Intent(getApplicationContext(), ShoppingListActivity.class));
+                        Intent intent = new Intent(getApplicationContext(), ShoppingListActivity.class);
+                        intent.putExtra("uid",uid);
+                        startActivity(intent);
                         break;
                     case R.id.logOut:
                         Toast.makeText(MainActivity.this, "Logged out.", Toast.LENGTH_SHORT).show();
@@ -133,12 +155,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
             }
         });
 
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("name", name);
         editor.apply();
 
@@ -159,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         productsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot s: snapshot.getChildren()){
+                for (DataSnapshot s : snapshot.getChildren()) {
                     Product product = s.getValue(Product.class);
                     categoryTypes.add(product.getProductType());
 
@@ -174,11 +192,10 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         });
 
 
-
     }
 
-    private void loadToCardView(){
-        for(String type : categoryTypes){
+    private void loadToCardView() {
+        for (String type : categoryTypes) {
             Category c = new Category();
             c.setCategoryType(type);
             categories.add(c);
@@ -190,13 +207,12 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     }
 
 
-
     @Override
     public void onCategoryClick(int position) {
         Category c = categories.get(position);
 
         Intent intent = new Intent(MainActivity.this, ProductListActivity.class);
-
+        intent.putStringArrayListExtra("locations", (ArrayList<String>) locationsList);
         intent.putExtra("type", c.getCategoryType());
         startActivity(intent);
 
@@ -205,13 +221,13 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     ////////////// For Map Below vv //////////////
 
 
-    private void startActivityPage(){
+    private void startActivityPage() {
         Intent intent = new Intent(MainActivity.this, NearestStoreActivity.class);
         intent.putStringArrayListExtra("locations", (ArrayList<String>) locationsList);
 
         System.out.println(mLocationBool);
 
-        new Timer().schedule(new TimerTask(){
+        new Timer().schedule(new TimerTask() {
             public void run() {
                 startActivity(intent);
             }
@@ -219,12 +235,13 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CHECK_SETTING){
-            switch (resultCode){
+        if (requestCode == REQUEST_CHECK_SETTING) {
+            switch (resultCode) {
                 case Activity.RESULT_OK:
                     Toast.makeText(this, "GPS is turned on. Press the button one more time to continue", Toast.LENGTH_SHORT).show();
                     break;
@@ -236,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
     }
 
-    private void GetLocations(){
+    private void GetLocations() {
 
         // Database Ref
         storeRef = FirebaseDatabase.getInstance().getReference().child("store_data");
@@ -246,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for(DataSnapshot s: snapshot.getChildren()){
+                for (DataSnapshot s : snapshot.getChildren()) {
                     String address = s.child("Address").getValue(String.class);
                     System.out.println(s);
                     System.out.println(address);
@@ -257,6 +274,37 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+    }
+
+    private void getLocationPermission(){
+        Log.d(TAG, "getLocationPermission: getting location permissions");
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
+        ActivityCompat.requestPermissions(this,
+                permissions,
+                LOCATION_PERMISSION_REQUEST_CODE);
+    }
+
+
+    private void getDeviceLocation() {
+
+        locClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            getLocationPermission();
+        }
+        locClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                Log.d(TAG, "Found location");
+                Location current_location = (Location) task.getResult();
+
+                editor.putString("user_latitude", String.valueOf(current_location.getLatitude()));
+                editor.putString("user_longitude", String.valueOf(current_location.getLongitude()));
+                editor.apply();
             }
         });
 

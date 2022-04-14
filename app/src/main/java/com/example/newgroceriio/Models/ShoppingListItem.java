@@ -8,11 +8,11 @@ public class ShoppingListItem {
     public ShoppingListItem() {
     }
 
-    public com.example.newgroceriio.Models.Product getProduct() {
+    public Product getProduct() {
         return Product;
     }
 
-    public void setProduct(com.example.newgroceriio.Models.Product product) {
+    public void setProduct(Product product) {
         Product = product;
     }
 
@@ -32,15 +32,4 @@ public class ShoppingListItem {
         Quantity -= 1;
     }
 
-//    public void updateShopListItem(ShoppingListItem shoppingListItem) {
-//        boolean ItemPresent = shopListItems.contains(shoppingListItem);
-//
-//        if (ItemPresent) {
-//            shoppingListItem.add1Quantity();
-//        }
-//
-//        else {
-//            shopListItems.add(shoppingListItem);
-//        }
-//    }
 }

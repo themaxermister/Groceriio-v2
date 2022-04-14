@@ -20,6 +20,9 @@
             android:value="@string/api" />
 
         <activity
+            android:name=".ShoppingListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProductListActivity"
             android:parentActivityName=".MainActivity"
             android:exported="false" />

@@ -109,6 +109,8 @@ public class LoginActivity extends AppCompatActivity {
                                 database = FirebaseDatabase.getInstance();
                                 mDatabase = database.getReference("users_data");
 
+                                String uid = fAuth.getCurrentUser().getUid();
+
                                 // Retrieve User name
                                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -120,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 name[0] = s.child("name").getValue(String.class);
                                             }
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                            intent.putExtra("uid", uid);
                                             intent.putExtra("name", name[0]);
                                             startActivity(intent);
                                         }

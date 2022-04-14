@@ -4,17 +4,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Order {
-    public String UserUid;
-    public String OrderUid;
-    public LocalDateTime OrderDateTime;
-    public List<Product> Products;
+    private String UserUid;
+    private String OrderUid;
+    private LocalDateTime OrderDateTime;
+    private List<Product> OrderProducts;
 
     public Order(){}
-    public Order(String orderUid, String userUid, LocalDateTime orderDateTime, List<Product> products){
-        OrderUid = orderUid;
+
+    public Order(String userUid, String orderUid, LocalDateTime orderDateTime, List<Product> orderProducts) {
         UserUid = userUid;
+        OrderUid = orderUid;
         OrderDateTime = orderDateTime;
-        Products = products;
+        OrderProducts = orderProducts;
     }
 
     public String getUserUid() {
@@ -41,11 +42,11 @@ public class Order {
         OrderDateTime = orderDateTime;
     }
 
-    public List<Product> getProducts() {
-        return Products;
+    public List<Product> getOrderProducts() {
+        return OrderProducts;
     }
 
-    public void setProducts(List<Product> products) {
-        Products = products;
+    public void setOrderProducts(List<Product> orderProducts) {
+        OrderProducts = orderProducts;
     }
 }

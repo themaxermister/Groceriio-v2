@@ -12,30 +12,31 @@ import java.util.List;
 
 public class Store {
 
-    public String StoreId;
-    public String StoreName;
-    public String StoreType;
-    public String Country;
-    public String Location;
-    public String Address;
-    public String OpenTime;
-    public String CloseTime;
-    public List<Product> Products;
+    private String StoreId;
+    private double Latitude;
+    private double Longitude;
+    private String StoreName;
+    private String StoreType;
+    private String Location;
+    private String Address;
+    private String OpeningTime;
+    private String ClosingTime;
+
+    private List<Product> StoreProducts;
 
     public Store() {}
 
-    public Store(String storeId, String storeName, String storeType, String country,
-                 String location, String address, String openTime, String closeTime, List<Product> products){
-
-        this.StoreId = storeId;
-        this.StoreName = storeName;
-        this.StoreType = storeType;
-        this.Country = country;
-        this.Location = location;
-        this.Address = address;
-        this.OpenTime = openTime;
-        this.CloseTime = closeTime;
-        this.Products = products;
+    public Store(String storeId, double latitude, double longitude, String storeName, String storeType, String location, String address, String openingTime, String closingTime, List<Product> storeProducts) {
+        StoreId = storeId;
+        Latitude = latitude;
+        Longitude = longitude;
+        StoreName = storeName;
+        StoreType = storeType;
+        Location = location;
+        Address = address;
+        OpeningTime = openingTime;
+        ClosingTime = closingTime;
+        StoreProducts = storeProducts;
     }
 
     public String getStoreId() {
@@ -44,6 +45,22 @@ public class Store {
 
     public void setStoreId(String storeId) {
         StoreId = storeId;
+    }
+
+    public double getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        Latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        Longitude = longitude;
     }
 
     public String getStoreName() {
@@ -62,14 +79,6 @@ public class Store {
         StoreType = storeType;
     }
 
-    public String getCountry() {
-        return Country;
-    }
-
-    public void setCountry(String country) {
-        Country = country;
-    }
-
     public String getLocation() {
         return Location;
     }
@@ -86,39 +95,39 @@ public class Store {
         Address = address;
     }
 
-    public String getOpenTime() {
-        return OpenTime;
+    public String getOpeningTime() {
+        return OpeningTime;
     }
 
-    public void setOpenTime(String openTime) {
-        OpenTime = openTime;
+    public void setOpeningTime(String openingTime) {
+        OpeningTime = openingTime;
     }
 
-    public String getCloseTime() {
-        return CloseTime;
+    public String getClosingTime() {
+        return ClosingTime;
     }
 
-    public void setCloseTime(String closeTime) {
-        CloseTime = closeTime;
+    public void setClosingTime(String closingTime) {
+        ClosingTime = closingTime;
     }
 
-    public List<Product> getProducts() {
-        return Products;
+    public List<Product> getStoreProducts() {
+        return StoreProducts;
     }
 
-    public void setProducts(ArrayList<Product> products) {
-        Products = products;
+    public void setStoreProducts(List<Product> storeProducts) {
+        StoreProducts = storeProducts;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean containProduct(String productId){
-        return Products.stream().filter(o -> o.getProductId().equals(productId)).findFirst().isPresent();
+        return StoreProducts.stream().filter(o -> o.getProductId().equals(productId)).findFirst().isPresent();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean addProducts(Product newProduct) {
         if (containProduct(newProduct.getProductId())) {
-            Products.add(newProduct);
+            StoreProducts.add(newProduct);
             return true;
         }
         return false;
@@ -127,6 +136,6 @@ public class Store {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean isActive(){
         LocalTime now = ZonedDateTime.now( ZoneId.of("Asia/Singapore")).toLocalTime() ;
-        return (!now.isBefore(LocalTime.parse(getOpenTime())) && now.isBefore(LocalTime.parse(getCloseTime())));
+        return (!now.isBefore(LocalTime.parse(getOpeningTime())) && now.isBefore(LocalTime.parse(getClosingTime())));
     }
 }

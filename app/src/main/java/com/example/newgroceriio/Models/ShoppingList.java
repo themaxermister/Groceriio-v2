@@ -1,15 +1,18 @@
 package com.example.newgroceriio.Models;
 
-import java.util.List;
+
+import java.util.ArrayList;
 
 public class ShoppingList {
-    public String UserUid;
-    public List<Product> Products;
+    private String UserUid;
+    private ArrayList<ShoppingListItem> shopListItems = new ArrayList<>();
 
-    public ShoppingList(){}
-    public ShoppingList(String userUid, List<Product> products){
+    public ShoppingList() {
+    }
+
+    public ShoppingList(String userUid, ArrayList<ShoppingListItem> shopListItems) {
         UserUid = userUid;
-        Products = products;
+        this.shopListItems = shopListItems;
     }
 
     public String getUserUid() {
@@ -20,11 +23,15 @@ public class ShoppingList {
         UserUid = userUid;
     }
 
-    public List<Product> getProducts() {
-        return Products;
+    public ArrayList<ShoppingListItem> getShopListItems() {
+        return shopListItems;
     }
 
-    public void setProducts(List<Product> products) {
-        Products = products;
+    public void setShopListItems(ArrayList<ShoppingListItem> shopListItems) {
+        this.shopListItems = shopListItems;
+    }
+
+    public void updateShopListItems(ShoppingListItem shoppingListItem) {
+        this.shopListItems.add(shoppingListItem);
     }
 }

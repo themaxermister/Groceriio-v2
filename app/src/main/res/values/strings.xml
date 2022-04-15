@@ -38,7 +38,7 @@
     <string name="product_details">Product Details</string>
     <string name="search_icon">Search Icon</string>
     <string name="int_input">1</string>
-    <string name="price_input">$32</string>
+    <string name="price_input">$0</string>
     <string name="search">Search</string>
     <string name="search_input">Search Input</string>
     <string name="nearest_store">Nearest Store</string>

@@ -147,6 +147,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                         break;
                     case R.id.logOut:
                         Toast.makeText(MainActivity.this, "Logged out.", Toast.LENGTH_SHORT).show();
+                        editor.clear();
+                        editor.apply();
                         FirebaseAuth.getInstance().signOut();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         break;
@@ -158,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
 
         editor.putString("name", name);
+        editor.putString("uid", uid);
         editor.apply();
 
         // Store to preference instead of depending on intent from login activity
@@ -212,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         Category c = categories.get(position);
 
         Intent intent = new Intent(MainActivity.this, ProductListActivity.class);
-        intent.putStringArrayListExtra("locations", (ArrayList<String>) locationsList);
         intent.putExtra("type", c.getCategoryType());
         startActivity(intent);
 

@@ -140,7 +140,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="@string/int_input"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/productPgStockText"
@@ -165,54 +164,7 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/productPgPrice">
-
-                            <Button
-                                android:id="@+id/productPgMinus"
-                                style="@style/Widget.Material3.Button.Icon"
-                                android:layout_width="48dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:background="@drawable/ic_baseline_remove_24"
-                                android:contentDescription="@string/minus_sign"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/productPgQuantInp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:background="@drawable/quantity_rectangle"
-                                android:gravity="center"
-                                android:text="@string/int_input"
-                                android:textAlignment="center"
-                                android:textColor="#757575"
-                                android:textSize="16sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/productPgMinus"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:ignore="TextContrastCheck" />
-
-                            <Button
-                                android:id="@+id/productPgPlus"
-                                style="@style/Widget.Material3.Button.Icon"
-                                android:layout_width="48dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:background="@drawable/ic_baseline_add_24"
-                                android:contentDescription="@string/plus_sign"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/productPgQuantInp"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            app:layout_constraintTop_toBottomOf="@+id/productPgPrice"/>
 
                         <TextView
                             android:id="@+id/productPgPrice"

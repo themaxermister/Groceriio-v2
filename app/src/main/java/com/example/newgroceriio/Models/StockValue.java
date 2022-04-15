@@ -1,60 +1,43 @@
 package com.example.newgroceriio.Models;
 
+import java.util.ArrayList;
+
 public class StockValue {
 
-    private Product ProductObject;
-    private Store OutletObject;
-    private Integer QuantitySold;
-    private Integer QuantityAvailable;
-    private boolean HavePromo;
+    private String ProductId;
+    private int QuantityAvailable;
+    private int QuantitySold;
+    private String StoreId;
 
-    public StockValue(){}
-
-    public StockValue(Product productObject, Store outletObject, Integer quantitySold, Integer quantityAvailable, boolean havePromo){
-        ProductObject = productObject;
-        OutletObject = outletObject;
-        QuantitySold = quantitySold;
-        QuantityAvailable = quantityAvailable;
-        HavePromo = havePromo;
+    public String getProductId() {
+        return ProductId;
     }
 
-    public Product getProductObject() {
-        return ProductObject;
+    public void setProductId(String productId) {
+        ProductId = productId;
     }
 
-    public void setProductObject(Product productObject) {
-        ProductObject = productObject;
-    }
-
-    public Store getOutletObject() {
-        return OutletObject;
-    }
-
-    public void setOutletObject(Store outletObject) {
-        OutletObject = outletObject;
-    }
-
-    public Integer getQuantitySold() {
-        return QuantitySold;
-    }
-
-    public void setQuantitySold(Integer quantitySold) {
-        QuantitySold = quantitySold;
-    }
-
-    public Integer getQuantityAvailable() {
+    public int getQuantityAvailable() {
         return QuantityAvailable;
     }
 
-    public void setQuantityAvailable(Integer quantityAvailable) {
+    public void setQuantityAvailable(int quantityAvailable) {
         QuantityAvailable = quantityAvailable;
     }
 
-    public boolean isHavePromo() {
-        return HavePromo;
+    public int getQuantitySold() {
+        return QuantitySold;
     }
 
-    public void setHavePromo(boolean havePromo) {
-        HavePromo = havePromo;
+    public void setQuantitySold(int quantitySold) {
+        QuantitySold = quantitySold;
+    }
+
+    public String getStoreId() {
+        return StoreId;
+    }
+
+    public void setStoreId(String storeId) {
+        StoreId = storeId;
     }
 }

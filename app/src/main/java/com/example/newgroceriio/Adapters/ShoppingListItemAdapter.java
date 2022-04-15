@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -74,13 +75,16 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
             }
 
         };
+
+
+
     }
     @NonNull
     @Override
     public ShoppingListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         // Get shopping item view from layout
         View view = LayoutInflater.from(context).inflate(R.layout.shopping_list_item, parent, false);
-        return new ShoppingListItemHolder(view, mOnShoppingListItemListener);
+        return new ShoppingListItemHolder(view, mOnShoppingListItemListener).linkAdapter(this);
     }
 
 
@@ -108,6 +112,8 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
         OnShoppingListItemListener onShoppingListItemListener;
         ImageView shopItemImage;
         TextView shopItemQuantity, shopItemPrice, shopItemName;
+        Button removeButton;
+        private ShoppingListItemAdapter adapter;
 
 
         ShoppingListItemHolder(View shoppingItemView, OnShoppingListItemListener onShoppingListItemListener){
@@ -117,6 +123,17 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
             shopItemQuantity = shoppingItemView.findViewById(R.id.listItemQuant);
             shopItemPrice = shoppingItemView.findViewById(R.id.listItemPrice);
             shopItemName = shoppingItemView.findViewById(R.id.listItemName);
+
+            removeButton = shoppingItemView.findViewById(R.id.listItemRemove);
+
+            removeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    adapter.allShoppingItems.remove(getAdapterPosition());
+                    adapter.notifyItemRemoved(getAdapterPosition());
+
+                }
+            });
 
             this.onShoppingListItemListener = onShoppingListItemListener;
             shoppingItemView.setOnClickListener(this);
@@ -132,6 +149,11 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
                     .into(shopItemImage);
         }
 
+        private ShoppingListItemHolder linkAdapter(ShoppingListItemAdapter adapter){
+            this.adapter = adapter;
+            return this;
+        }
+
         @Override
         public void onClick(View view) {
             onShoppingListItemListener.onShoppingListItemClick(getAdapterPosition());
@@ -141,6 +163,8 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
     public interface OnShoppingListItemListener{
         void onShoppingListItemClick(int position);
     }
+
+
 
 
 }

@@ -6,8 +6,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,8 +69,9 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
                         productList.add(product);
                     }
                     System.out.println(s);
-                    loadToCardView();
+
                 }
+                loadToCardView();
             }
 
             @Override
@@ -127,6 +126,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         intent.putExtra("product_metric", p.getMetric());
         intent.putExtra("product_price", String.valueOf(p.getPrice()));
         intent.putExtra("product_url", p.getImgUrl());
+        intent.putExtra("product_id", p.getProductId());
         startActivity(intent);
 
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,17 +32,19 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class ShoppingListActivity extends AppCompatActivity implements ShoppingListItemAdapter.OnShoppingListItemListener{
+    private static final String TAG = "ShoppingListActivity";
     private RecyclerView recyclerView;
     private ShoppingListItemAdapter adapter;
     private ArrayList<ShoppingListItem> shoppingListItems;
     private FirebaseAuth fAuth;
     private FirebaseDatabase database;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase, mStockMarket;
     private Button mConfirmOrder, mBackToHome;
     private TextView mTotalCost;
     private String userID;
     private static ShoppingList shoppingList;
     private static ArrayList<ShoppingListItem>  allItems;
+    private static ArrayList<String>  availStore;
     private SharedPreferences sharedPreferences;
 
 
@@ -53,6 +56,19 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         mConfirmOrder = findViewById(R.id.shopListOrderBtn);
         mBackToHome = findViewById(R.id.shopListBackBtn);
         mTotalCost = findViewById(R.id.shopListTotalCost);
+
+        mConfirmOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShoppingListActivity.this, EnterAddressActivity.class);
+                Log.e(TAG, "this is before availStore");
+                intent.putExtra("storeLocations", availStore);
+
+                startActivity(intent);
+
+
+            }
+        });
 
 
         mBackToHome.setOnClickListener(new View.OnClickListener() {
@@ -79,15 +95,22 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         Intent intent = getIntent();
         String productId = intent.getStringExtra("product_id");
         String storeId = intent.getStringExtra("store_id");
+        Log.e(TAG, storeId);
+
         String productName = intent.getStringExtra("product_name");
         String productUrl = intent.getStringExtra("product_url");
         String productPrice = intent.getStringExtra("product_price");
+
+        retrieveAvailableMarket(storeId);
+
 
         if(shoppingList == null){
             shoppingList = new ShoppingList();
             allItems = new ArrayList<>();
         }
+        Log.e(TAG, "checking user id");
         if(userID != null) {
+            Log.e(TAG, "userId is not null");
             retrieveShoppingList(userID, productId,storeId, productName, productUrl, productPrice);
         }
 
@@ -113,6 +136,29 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
                 if(allItems.size() >0){
                     loadToCardView();
                     calculateTotal(allItems);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void retrieveAvailableMarket(String storeId){
+        mStockMarket = FirebaseDatabase.getInstance().getReference().child("store_data").child(storeId);
+
+        mStockMarket.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    String address = s.child("Address").getValue(String.class);
+                    System.out.println(s);
+                    System.out.println(address);
+                    availStore.add(address);
                 }
             }
 

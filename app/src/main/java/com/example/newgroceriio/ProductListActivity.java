@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductListActivity extends AppCompatActivity implements ProductAdapter.OnProductListener{
+    private static final String TAG = "ProductListActivity";
     Button mProductBackBtn;
     TextView mProductTitleText;
 
@@ -127,6 +129,16 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         intent.putExtra("product_price", String.valueOf(p.getPrice()));
         intent.putExtra("product_url", p.getImgUrl());
         intent.putExtra("product_id", p.getProductId());
+
+        Log.e(TAG, "pass here");
+        Log.e(TAG, p.getProductName());
+        Log.e(TAG, p.getProductBrand());
+        Log.e(TAG, p.getMetric());
+        Log.e(TAG, String.valueOf(p.getPrice()));
+        Log.e(TAG, p.getImgUrl());
+        Log.e(TAG, p.getProductId());
+
+
         startActivity(intent);
 
 

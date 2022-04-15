@@ -112,7 +112,7 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
         OnShoppingListItemListener onShoppingListItemListener;
         ImageView shopItemImage;
         TextView shopItemQuantity, shopItemPrice, shopItemName;
-        Button removeButton;
+        Button removeButton, incrementButton, decrementButton;
         private ShoppingListItemAdapter adapter;
 
 
@@ -131,6 +131,26 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
                 public void onClick(View view) {
                     adapter.allShoppingItems.remove(getAdapterPosition());
                     adapter.notifyItemRemoved(getAdapterPosition());
+                    adapter.notifyItemRangeChanged(getAdapterPosition(), adapter.allShoppingItems.size());
+                }
+            });
+
+            decrementButton = shoppingItemView.findViewById(R.id.listItemMinus);
+            decrementButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    adapter.allShoppingItems.get(getAdapterPosition()).remove1Quantity();
+                    adapter.notifyItemChanged(getAdapterPosition());
+
+                }
+            });
+
+            incrementButton = shoppingItemView.findViewById(R.id.listItemPlus);
+            incrementButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    adapter.allShoppingItems.get(getAdapterPosition()).add1Quantity();
+                    adapter.notifyItemChanged(getAdapterPosition());
 
                 }
             });

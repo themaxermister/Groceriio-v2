@@ -79,11 +79,14 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate MainActivity");
         setContentView(R.layout.activity_main);
+
+        getLocationPermission();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedPreferences.edit();
-        getDeviceLocation();
+        // getDeviceLocation();
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -99,50 +102,11 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                     case R.id.mapPage:
                         locationsList = new ArrayList<>();
                         GetLocations();
-
-                        locationRequest = LocationRequest.create();
-                        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                        locationRequest.setFastestInterval(2000);
-
-                        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                                .addLocationRequest(locationRequest);
-                        builder.setAlwaysShow(true);
-
-                        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(getApplicationContext())
-                                .checkLocationSettings(builder.build());
-
-                        result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
-                            @Override
-                            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
-                                try {
-                                    LocationSettingsResponse response = task.getResult(ApiException.class);
-
-                                    startActivityPage();
-                                    Toast.makeText(MainActivity.this, "Gps is on", Toast.LENGTH_SHORT).show();
-                                } catch (ApiException e) {
-                                    switch (e.getStatusCode()) {
-                                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-
-                                            try {
-                                                ResolvableApiException resolvableApiException = (ResolvableApiException) e;
-                                                resolvableApiException.startResolutionForResult(MainActivity.this, REQUEST_CHECK_SETTING);
-                                            } catch (IntentSender.SendIntentException sendIntentException) {
-                                                Log.d(TAG, "Send intent exception");
-                                            }
-                                            break;
-
-                                        //when user device does not have location functionality
-                                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                                            break;
-                                    }
-                                }
-
-                            }
-                        });
+                        startActivityPage();
                         break;
                     case R.id.cartPage:
                         Intent intent = new Intent(getApplicationContext(), ShoppingListActivity.class);
-                        intent.putExtra("uid",uid);
+                        intent.putExtra("uid", uid);
                         startActivity(intent);
                         break;
                     case R.id.logOut:
@@ -156,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                 return false;
             }
         });
-
 
 
         editor.putString("name", name);
@@ -195,6 +158,27 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         });
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                    }
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    getDeviceLocation();
+                }
+            }
+        }
     }
 
     private void loadToCardView() {
@@ -238,22 +222,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CHECK_SETTING) {
-            switch (resultCode) {
-                case Activity.RESULT_OK:
-                    Toast.makeText(this, "GPS is turned on. Press the button one more time to continue", Toast.LENGTH_SHORT).show();
-                    break;
-                case Activity.RESULT_CANCELED:
-                    Toast.makeText(this, "GPS is required to be turned on", Toast.LENGTH_SHORT).show();
-
-            }
-        }
-
-    }
 
     private void GetLocations() {
 
@@ -281,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
     }
 
-    private void getLocationPermission(){
+    private void getLocationPermission() {
         Log.d(TAG, "getLocationPermission: getting location permissions");
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -294,19 +263,18 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     private void getDeviceLocation() {
 
         locClient = LocationServices.getFusedLocationProviderClient(this);
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            getLocationPermission();
+            return;
         }
         locClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
-                Log.d(TAG, "Found location");
                 Location current_location = (Location) task.getResult();
+                LocationController.getInstance().setLongLat(current_location.getLongitude(), current_location.getLatitude());
 
-                editor.putString("user_latitude", String.valueOf(current_location.getLatitude()));
-                editor.putString("user_longitude", String.valueOf(current_location.getLongitude()));
-                editor.apply();
+//                editor.putString("user_latitude", String.valueOf(current_location.getLatitude()));
+//                editor.putString("user_longitude", String.valueOf(current_location.getLongitude()));
+//                editor.apply();
             }
         });
 

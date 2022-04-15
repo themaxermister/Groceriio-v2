@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,6 +34,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ProductPageActivity extends AppCompatActivity {
+    private static final String TAG = "ProductPageActivity";
     private ImageView mProductPgImage;
     private Button mProductPgBackBtn, mProductPgAddToCart;
     private TextView mProductPgName, mProductPgBrand, mProductPgMetric,
@@ -52,6 +54,9 @@ public class ProductPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_page);
+
+        Log.e(TAG, "onCreate");
+
         mProductPgBackBtn = findViewById(R.id.productPgBackBtn);
         mProductPgAddToCart = findViewById(R.id.productPgAddToCart);
 
@@ -87,6 +92,8 @@ public class ProductPageActivity extends AppCompatActivity {
                     intent.putExtra("product_name", pName);
                     intent.putExtra("product_url", pUrl);
                     intent.putExtra("product_price", String.valueOf(pPrice));
+
+                    Log.e(TAG, storeID[0]);
                     startActivity(intent);
 
                 }
@@ -104,12 +111,13 @@ public class ProductPageActivity extends AppCompatActivity {
         locations = new ArrayList<>();
         latLngList = new ArrayList<>();
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         user_location = new Location("");
-        String latitude = sharedPreferences.getString("user_latitude","");
-        String longitude = sharedPreferences.getString("user_longitude","");
-        user_location.setLatitude(Double.parseDouble(latitude));
-        user_location.setLongitude(Double.parseDouble(longitude));
+        LocationController locationController = LocationController.getInstance();
+//        String latitude = locationController.latitude;
+//        String longitude = sharedPreferences.getString("user_longitude","");
+        user_location.setLatitude(locationController.latitude);
+        user_location.setLongitude(locationController.longitude);
 
         storeRef = FirebaseDatabase.getInstance().getReference("store_data");
         storeRefTwo = FirebaseDatabase.getInstance().getReference("store_data");

@@ -56,6 +56,13 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
             }
         });
 
+        mConfirmOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), CollectionLocationActivity.class));
+            }
+        });
+
         mTotalCost = findViewById(R.id.shopListTotalCost);
 
         // Link view widgets to objects

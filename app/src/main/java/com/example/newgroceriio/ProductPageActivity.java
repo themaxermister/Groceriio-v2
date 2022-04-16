@@ -52,9 +52,6 @@ public class ProductPageActivity extends AppCompatActivity {
                 .load(pUrl)
                 .into(mProductPgImage);
 
-
-
-
         mProductPgBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                         Intent intent_two = new Intent(getApplicationContext(), LoginActivity.class);
                         intent_two.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_two);
+                        finish();
                         break;
                 }
                 return false;

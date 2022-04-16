@@ -30,10 +30,6 @@
             android:name=".ProductPageActivity"
             android:exported="false" />
         <activity
-            android:name=".VerifyEmailActivity"
-            android:parentActivityName=".LoginActivity"
-            android:exported="false" />
-        <activity
             android:name=".NearestStoreActivity"
             android:exported="false" />
         <activity
@@ -41,9 +37,6 @@
             android:exported="false" />
         <activity
             android:name=".OrderConfirmationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EnterAddressActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterFailActivity"

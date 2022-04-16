@@ -14,11 +14,14 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,9 +48,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -64,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
     private DatabaseReference storeRef;
     private List<String> locationsList;
+    private List<LatLng> latLngList;
+    private List<Address> addresses;
     private LocationRequest locationRequest;
     public static final int REQUEST_CHECK_SETTING = 1001;
     private static boolean mLocationBool = false;
@@ -81,6 +90,14 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         super.onCreate(savedInstanceState);
         Log.e(TAG, "onCreate MainActivity");
         setContentView(R.layout.activity_main);
+
+        locationsList = new ArrayList<>();
+        GetMarketLocations();
+//
+//        latLngList = new ArrayList<>();
+//        convertAddressToLatLng(locationsList);
+
+
 
         getLocationPermission();
 
@@ -100,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                     case R.id.homePage:
                         break;
                     case R.id.mapPage:
-                        locationsList = new ArrayList<>();
-                        GetLocations();
+//                        locationsList = new ArrayList<>();
+//                        GetMarketLocations();
                         startActivityPage();
                         break;
                     case R.id.cartPage:
@@ -224,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
 
 
-    private void GetLocations() {
+    private void GetMarketLocations() {
 
         // Database Ref
         storeRef = FirebaseDatabase.getInstance().getReference().child("store_data");
@@ -239,6 +256,13 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                     System.out.println(s);
                     System.out.println(address);
                     locationsList.add(address);
+
+                    latLngList = new ArrayList<>();
+                    convertAddressToLatLng(locationsList);
+
+
+
+
                 }
             }
 
@@ -272,6 +296,10 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                 Location current_location = (Location) task.getResult();
                 LocationController.getInstance().setLongLat(current_location.getLongitude(), current_location.getLatitude());
 
+                sortMarkersFromLocation(current_location);
+
+
+
 //                editor.putString("user_latitude", String.valueOf(current_location.getLatitude()));
 //                editor.putString("user_longitude", String.valueOf(current_location.getLongitude()));
 //                editor.apply();
@@ -279,4 +307,88 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         });
 
     }
+
+    private void convertAddressToLatLng(List<String> locations){
+
+        List<Address> addresses = new ArrayList<>();
+
+        // Convert String address to object address
+        for(String address: locations) {
+            final Geocoder geocoder = new Geocoder(this);
+
+            try {
+                List<Address> tempAddresses = geocoder.getFromLocationName(address, 1);
+                if (tempAddresses != null && !tempAddresses.isEmpty()) {
+                    Address temp = tempAddresses.get(0);
+                    // Get all product addresses
+                    System.out.println(address);
+                    addresses.add(temp);
+                    String message = String.format("Latitude: %f, Longitude: %f", temp.getLatitude(), temp.getLongitude());
+                    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                } else {
+                    // Display appropriate message when Geocoder services are not available
+                    Toast.makeText(this, "Unable to geocode zipcode", Toast.LENGTH_LONG).show();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // convert object address to object latlng
+        for(int i = 0; i < addresses.size(); i++){
+            LatLng lat_lng = new LatLng(addresses.get(i).getLatitude(), addresses.get(i).getLongitude());
+            latLngList.add(lat_lng);
+        }
+    }
+
+    private void sortMarkersFromLocation(Location current_location) {
+        System.out.println("Below is markers");
+        System.out.println(latLngList.size());
+
+        List<Location> markers = new ArrayList<>();
+
+        for(LatLng lat_lng: latLngList){
+            Location location = new Location("");
+            location.setLatitude(lat_lng.latitude);
+            location.setLongitude(lat_lng.longitude);
+            markers.add(location);
+        }
+
+        System.out.println(markers);
+        Collections.sort(markers, new SortDistance(){
+            @Override
+            public int compare(Location o1, Location o2) {
+                Float dist1 = o1.distanceTo(current_location);
+                Float dist2 = o2.distanceTo(current_location);
+                return dist1.compareTo(dist2);
+            }
+        });
+        System.out.println(markers);
+
+        latLngList = new ArrayList<>();
+        for(Location m: markers){
+            latLngList.add(new LatLng(m.getLatitude(), m.getLongitude()));
+        }
+        System.out.println(latLngList.get(0).latitude);
+        System.out.println(latLngList.get(0).longitude);
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        String address = null;
+        String city = null;
+        String state = null;
+        String country = null;
+        String postalCode = null;
+        String knonName = null;
+
+
+
+
+
+    }
+    public void getLocationDetails(View view) {
+
+
+    }
+
 }
+

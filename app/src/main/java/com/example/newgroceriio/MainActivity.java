@@ -52,6 +52,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -69,10 +70,22 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     private ArrayList<Category> categories;
     private CategoryAdapter adapter;
 
+    private TextView currentLocationText;
+    private String currentAddress = null;
+
+    private ArrayList<String> storeProductId;
+
+    private HashMap<String, Integer> mStoreProductId;
+
+
     private DatabaseReference storeRef;
     private List<String> locationsList;
+    private List<String> storesId;
     private List<LatLng> latLngList;
+    private List<LatLng> latLngListSorted;
     private List<Address> addresses;
+    private ArrayList<String> productIdNearestStore;
+    private String nearestStore;
     private LocationRequest locationRequest;
     public static final int REQUEST_CHECK_SETTING = 1001;
     private static boolean mLocationBool = false;
@@ -91,7 +104,12 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         Log.e(TAG, "onCreate MainActivity");
         setContentView(R.layout.activity_main);
 
+        currentLocationText = findViewById(R.id.homeUserName);
+
+        mStoreProductId = new HashMap<String,Integer>();
         locationsList = new ArrayList<>();
+        storesId = new ArrayList<>();
+        storeProductId = new ArrayList<>();
         GetMarketLocations();
 //
 //        latLngList = new ArrayList<>();
@@ -115,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.homePage:
+
                         break;
                     case R.id.mapPage:
 //                        locationsList = new ArrayList<>();
@@ -150,6 +169,46 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         userFullName.setText("Welcome, " + stored_name);
 
 
+
+
+
+
+
+    }
+
+    private void getProductId( String nearestStore){
+
+        DatabaseReference productInfo = FirebaseDatabase.getInstance().getReference("stock_data").child(nearestStore);
+
+        productInfo.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    String productId = s.child("ProductId").getValue(String.class);
+//                    String storeId = s.child("StoreId").getValue(String.class);
+                    storeProductId.add(productId);
+                    mStoreProductId.put(productId, 0);
+
+                }
+                filterData();
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+
+    private void filterData(){
         productsRef = FirebaseDatabase.getInstance().getReference("product_data");
         categories = new ArrayList<>();
         categoryTypes = new HashSet<>();
@@ -162,7 +221,15 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot s : snapshot.getChildren()) {
                     Product product = s.getValue(Product.class);
-                    categoryTypes.add(product.getProductType());
+                    System.out.println(product.getProductId());
+
+                    if (mStoreProductId.containsKey(product.getProductId())) {
+                        categoryTypes.add(product.getProductType());
+
+                    }
+//
+//                    categoryTypes.add(product.getProductType());
+
 
                 }
                 loadToCardView();
@@ -173,8 +240,6 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
             }
         });
-
-
     }
 
     @Override
@@ -217,6 +282,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
         Intent intent = new Intent(MainActivity.this, ProductListActivity.class);
         intent.putExtra("type", c.getCategoryType());
+        intent.putExtra("currentAddress", currentAddress);
         startActivity(intent);
 
     }
@@ -253,9 +319,14 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
                 for (DataSnapshot s : snapshot.getChildren()) {
                     String address = s.child("Address").getValue(String.class);
+                    String storeId = s.child("StoreId").getValue(String.class);
                     System.out.println(s);
                     System.out.println(address);
+
                     locationsList.add(address);
+                    storesId.add(storeId);
+
+
 
                     latLngList = new ArrayList<>();
                     convertAddressToLatLng(locationsList);
@@ -296,6 +367,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                 Location current_location = (Location) task.getResult();
                 LocationController.getInstance().setLongLat(current_location.getLongitude(), current_location.getLatitude());
 
+
+
                 sortMarkersFromLocation(current_location);
 
 
@@ -324,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                     System.out.println(address);
                     addresses.add(temp);
                     String message = String.format("Latitude: %f, Longitude: %f", temp.getLatitude(), temp.getLongitude());
-                    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
                 } else {
                     // Display appropriate message when Geocoder services are not available
                     Toast.makeText(this, "Unable to geocode zipcode", Toast.LENGTH_LONG).show();
@@ -342,6 +415,18 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     }
 
     private void sortMarkersFromLocation(Location current_location) {
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(current_location.getLatitude(), current_location.getLongitude(), 1);
+            currentAddress = addresses.get(0).getAddressLine(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        currentLocationText.setText(currentAddress);
+
         System.out.println("Below is markers");
         System.out.println(latLngList.size());
 
@@ -365,30 +450,30 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         });
         System.out.println(markers);
 
-        latLngList = new ArrayList<>();
+        latLngListSorted = new ArrayList<>();
         for(Location m: markers){
-            latLngList.add(new LatLng(m.getLatitude(), m.getLongitude()));
+            latLngListSorted.add(new LatLng(m.getLatitude(), m.getLongitude()));
         }
-        System.out.println(latLngList.get(0).latitude);
-        System.out.println(latLngList.get(0).longitude);
+        System.out.println(latLngListSorted.get(0).latitude);
+        System.out.println(latLngListSorted.get(0).longitude);
 
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        String address = null;
-        String city = null;
-        String state = null;
-        String country = null;
-        String postalCode = null;
-        String knonName = null;
+        for (int i = 0; i < latLngList.size(); i++) {
+            if (latLngListSorted.get(0).latitude == latLngList.get(i).latitude && latLngListSorted.get(0).longitude == latLngList.get(i).longitude){
+                nearestStore = storesId.get(i);
+                break;
+            }
+
+        }
+
+        getProductId(nearestStore);
+
 
 
 
 
 
     }
-    public void getLocationDetails(View view) {
 
-
-    }
 
 }
 

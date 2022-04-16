@@ -1,7 +1,9 @@
 package com.example.newgroceriio;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,6 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 public class ShoppingListActivity extends AppCompatActivity implements ShoppingListItemAdapter.OnShoppingListItemListener{
     private RecyclerView recyclerView;
@@ -32,10 +37,12 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
     private FirebaseAuth fAuth;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
-    private Button mConfirmOrder, mItemRemove, mItemPlus, mItemMinus, mBackToHome;
+    private Button mConfirmOrder, mBackToHome;
     private TextView mTotalCost;
     private String userID;
-    private ShoppingList shoppingList;
+    private static ShoppingList shoppingList;
+    private static ArrayList<ShoppingListItem>  allItems;
+    private SharedPreferences sharedPreferences;
 
 
     @Override
@@ -44,10 +51,9 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         setContentView(R.layout.shopping_list_page);
         fAuth = FirebaseAuth.getInstance();
         mConfirmOrder = findViewById(R.id.shopListOrderBtn);
-        mItemRemove = findViewById(R.id.listItemRemove);
-        mItemPlus = findViewById(R.id.productPgPlus);
-        mItemMinus = findViewById(R.id.productPgMinus);
         mBackToHome = findViewById(R.id.shopListBackBtn);
+        mTotalCost = findViewById(R.id.shopListTotalCost);
+
 
         mBackToHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,79 +62,58 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
             }
         });
 
-        mConfirmOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), CollectionLocationActivity.class));
-            }
-        });
-
-        mTotalCost = findViewById(R.id.shopListTotalCost);
 
         // Link view widgets to objects
         recyclerView = findViewById(R.id.shopListView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        shoppingListItems = new ArrayList<>();
 
-        Intent intent = getIntent();
-        userID = intent.getStringExtra("uid");
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        userID = sharedPreferences.getString("uid","");
         System.out.println(userID);
+
 
         // Database Ref
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("shopping_list_data");
 
-
-//        createOrUpdateShoppingList(userID);
-        retrieveShoppingList(userID);
-
-
-
-
-
-    }
-    private void createOrUpdateShoppingList(String userID) {
-        String keyId = userID;
-
-        Product apple = new Product();
-        apple.setProductName("Apple");
-
-        Product pear = new Product();
-        pear.setProductName("Pear");
+        Intent intent = getIntent();
+        String productId = intent.getStringExtra("product_id");
+        String storeId = intent.getStringExtra("store_id");
+        String productName = intent.getStringExtra("product_name");
+        String productUrl = intent.getStringExtra("product_url");
+        String productPrice = intent.getStringExtra("product_price");
 
         if(shoppingList == null){
             shoppingList = new ShoppingList();
+            allItems = new ArrayList<>();
         }
-
-        ShoppingListItem shoppingListItem1 = new ShoppingListItem();
-        shoppingListItem1.setProduct(apple);
-        shoppingListItem1.add1Quantity();
-
-        ShoppingListItem shoppingListItem2 = new ShoppingListItem();
-        shoppingListItem2.setProduct(apple);
-        shoppingListItem2.setQuantity(3);
-
-
-        shoppingList.setUserUid(userID);
-        shoppingList.updateShopListItems(shoppingListItem1);
-        shoppingList.updateShopListItems(shoppingListItem2);
-        mDatabase.child(keyId).setValue(shoppingList);
+        if(userID != null) {
+            retrieveShoppingList(userID, productId,storeId, productName, productUrl, productPrice);
+        }
 
 
     }
 
-    private void retrieveShoppingList(String userID) {
+
+    private void retrieveShoppingList(String userID, String productId, String storeId, String productName, String productUrl, String productPrice) {
 
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot s: snapshot.getChildren()){
-                    ShoppingList shoppingList = s.getValue(ShoppingList.class);
-                    ArrayList<ShoppingListItem> shopItems = shoppingList.getShopListItems();
-                    shoppingListItems = shopItems;
+                    if(s.getKey().equals(userID)){
+                        shoppingList = s.getValue(ShoppingList.class);
+                    }
                     System.out.println(s);
                 }
-                loadToCardView();
+                allItems = shoppingList.getShopListItems();
+                if(productId != null && storeId != null){
+                    addItemToList(productId, storeId, productName,productUrl, productPrice);
+                }
+                if(allItems.size() >0){
+                    loadToCardView();
+                    calculateTotal(allItems);
+                }
             }
 
             @Override
@@ -139,12 +124,78 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
     }
 
 
+    private void addItemToList(String productId, String storeId, String productName, String productUrl, String productPrice){
+        ShoppingListItem shoppingItem = new ShoppingListItem();
+        Product p = new Product();
+        p.setProductId(productId);
+        p.setProductName(productName);
+        p.setImgUrl(productUrl);
+        p.setPrice(Double.parseDouble(productPrice));
+        shoppingItem.setProduct(p);
+        shoppingItem.setStoreId(storeId);
+        shoppingItem.add1Quantity();
+
+
+        if(allItems.size() == 0){
+            for(ShoppingListItem i: shoppingList.getShopListItems()){
+                allItems.add(i);
+            }
+        }
+
+        boolean check = false;
+        ArrayList<ShoppingListItem> allItemsUpdated = new ArrayList<ShoppingListItem>();
+        for(ShoppingListItem i: allItems){
+            if (i.getProduct().getProductName().equals(productName)) {
+                i.add1Quantity();
+                check = true;
+            }
+            allItemsUpdated.add(i);
+        }
+        allItems = allItemsUpdated;
+
+        if(!check){
+            allItems.add(shoppingItem);
+        }
+
+        shoppingList.setShopListItems(allItems);
+        updateShoppingList();
+        calculateTotal(allItems);
+    }
+
+    private void calculateTotal(ArrayList<ShoppingListItem> list){
+        double total = 0;
+        for(ShoppingListItem i: list){
+            total = total + i.getProduct().getPrice();
+        }
+        mTotalCost.setText(String.valueOf(total));
+    }
+
+    private void updateShoppingList(){
+        Map<String, Object> updated = new HashMap<String,Object>();
+        updated.put(userID, shoppingList);
+        mDatabase.updateChildren(updated);
+    }
+
     private void loadToCardView(){
-        adapter = new ShoppingListItemAdapter(this, shoppingListItems, this);
+        adapter = new ShoppingListItemAdapter(this, allItems, this);
         recyclerView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
     }
+
+//    @Override
+//    protected void onStop() {
+//        // call the superclass method first
+//        super.onStop();
+//        updateShoppingList();
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        // call the superclass method first
+//        super.onPause();
+//        updateShoppingList();
+//    }
 
     @Override
     public void onShoppingListItemClick(int position) {

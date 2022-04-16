@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
     private FusedLocationProviderClient locClient;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
 
+    private Boolean mLocationPermissionsGranted = false;
+
     private String TAG = "MainActivity";
 
     @Override
@@ -147,8 +149,12 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                         break;
                     case R.id.logOut:
                         Toast.makeText(MainActivity.this, "Logged out.", Toast.LENGTH_SHORT).show();
+                        editor.clear();
+                        editor.apply();
                         FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        Intent intent_two = new Intent(getApplicationContext(), LoginActivity.class);
+                        intent_two.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent_two);
                         break;
                 }
                 return false;
@@ -158,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
 
         editor.putString("name", name);
+        editor.putString("uid", uid);
         editor.apply();
 
         // Store to preference instead of depending on intent from login activity
@@ -212,7 +219,6 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         Category c = categories.get(position);
 
         Intent intent = new Intent(MainActivity.this, ProductListActivity.class);
-        intent.putStringArrayListExtra("locations", (ArrayList<String>) locationsList);
         intent.putExtra("type", c.getCategoryType());
         startActivity(intent);
 
@@ -308,5 +314,29 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
             }
         });
 
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d(TAG, "onRequestPermissionsResult: called.");
+        mLocationPermissionsGranted = false;
+
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionsGranted = false;
+                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
+                            return;
+                        }
+                    }
+                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
+                    mLocationPermissionsGranted = true;
+                }
+            }
+        }
     }
 }

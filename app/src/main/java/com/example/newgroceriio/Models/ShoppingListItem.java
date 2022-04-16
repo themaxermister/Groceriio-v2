@@ -4,8 +4,17 @@ package com.example.newgroceriio.Models;
 public class ShoppingListItem {
     private Product Product;
     private int Quantity;
+    private String StoreId;
 
     public ShoppingListItem() {
+    }
+
+    public String getStoreId() {
+        return StoreId;
+    }
+
+    public void setStoreId(String storeId) {
+        StoreId = storeId;
     }
 
     public Product getProduct() {

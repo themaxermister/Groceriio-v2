@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.homePage:
-                        break;
+                        return true;
                     case R.id.mapPage:
                         locationsList = new ArrayList<>();
                         GetLocations();
@@ -138,15 +138,14 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                                             break;
                                     }
                                 }
-
                             }
                         });
-                        break;
+                        return true;
                     case R.id.cartPage:
                         Intent intent = new Intent(getApplicationContext(), ShoppingListActivity.class);
                         intent.putExtra("uid",uid);
                         startActivity(intent);
-                        break;
+                        return true;
                     case R.id.logOut:
                         Toast.makeText(MainActivity.this, "Logged out.", Toast.LENGTH_SHORT).show();
                         editor.clear();
@@ -155,8 +154,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
                         Intent intent_two = new Intent(getApplicationContext(), LoginActivity.class);
                         intent_two.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_two);
-                        finish();
-                        break;
+                        return true;
                 }
                 return false;
             }

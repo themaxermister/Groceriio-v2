@@ -1,4 +1,4 @@
-package com.example.newgroceriio;
+package com.example.newgroceriio.Models;
 
 // user class to keep track of registered user and their profile
 public class User {

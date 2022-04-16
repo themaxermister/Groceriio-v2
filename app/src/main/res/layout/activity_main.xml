@@ -9,21 +9,52 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeTopBar"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/homeUserName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/homeWelcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:textSize="20dp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/homeAddr"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="Welcome!" />
+
+        <TextView
+            android:id="@+id/homeUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center_vertical"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/homeAddr"
+            app:layout_constraintStart_toEndOf="@+id/homeWelcomeText"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/name" />
+
+        <TextView
+            android:id="@+id/homeAddr"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeUserName"
+            tools:text="@string/address" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

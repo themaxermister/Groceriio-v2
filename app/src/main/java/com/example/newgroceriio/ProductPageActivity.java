@@ -231,8 +231,7 @@ public class ProductPageActivity extends AppCompatActivity {
                     // Get all product addresses
                     System.out.println(address);
                     addresses.add(temp);
-                    String message = String.format("Latitude: %f, Longitude: %f", temp.getLatitude(), temp.getLongitude());
-                    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
                 } else {
                     // Display appropriate message when Geocoder services are not available
                     Toast.makeText(this, "Unable to geocode zipcode", Toast.LENGTH_LONG).show();

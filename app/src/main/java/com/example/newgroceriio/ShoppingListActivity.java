@@ -160,48 +160,49 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
             allItems.add(shoppingItem);
         }
 
-        reduceStock(storeId, productId);
+//        reduceStock(storeId, productId);
         updateShoppingList();
         calculateTotal(allItems);
     }
 
 
-    private void reduceStock(String storeId, String productId){
-
-
-        stockRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot s : snapshot.getChildren()){
-                    for(DataSnapshot stock : s.getChildren()){
-                        System.out.println(stock);
-                        StockValue sv = stock.getValue(StockValue.class);
-                        System.out.println(sv.getStoreStockId());
-                        System.out.println(storeId);
-                        if(sv.getStoreStockId().equals(storeId) && sv.getProductStockId().equals(productId)){
-                            Map<String, Object> updated = new HashMap<String,Object>();
-                            sv.reduceStockByOne();
-                            updated.put(sv.getProductStockId(), sv);
-                            stockRef.child(sv.getStoreStockId()).updateChildren(updated);
-
-                        }
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
+//    private void reduceStock(String storeId, String productId){
+//
+//
+//        stockRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for(DataSnapshot s : snapshot.getChildren()){
+//                    for(DataSnapshot stock : s.getChildren()){
+//                        System.out.println(stock);
+//                        StockValue sv = stock.getValue(StockValue.class);
+//                        System.out.println(sv.getStoreStockId());
+//                        System.out.println(storeId);
+//                        if(sv.getStoreStockId().equals(storeId) && sv.getProductStockId().equals(productId)){
+//                            Map<String, Object> updated = new HashMap<String,Object>();
+//                            sv.reduceStockByOne();
+//                            updated.put(sv.getProductStockId(), sv);
+//                            stockRef.child(sv.getStoreStockId()).updateChildren(updated);
+//
+//                        }
+//                    }
+//
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//    }
 
     private void calculateTotal(ArrayList<ShoppingListItem> list){
         double total = 0;
         for(ShoppingListItem i: list){
+
             total = total + i.getProduct().getPrice();
         }
         mTotalCost.setText(String.valueOf(total));

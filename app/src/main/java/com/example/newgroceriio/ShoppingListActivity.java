@@ -34,7 +34,6 @@ import java.util.Map;
 public class ShoppingListActivity extends AppCompatActivity implements ShoppingListItemAdapter.OnShoppingListItemListener{
     private RecyclerView recyclerView;
     private ShoppingListItemAdapter adapter;
-    private ArrayList<ShoppingListItem> shoppingListItems;
     private FirebaseAuth fAuth;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
@@ -115,7 +114,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
                 }
                 if(allItems.size() >0){
                     loadToCardView();
-                    calculateTotal(allItems);
+
                 }
             }
 
@@ -162,7 +161,6 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
 
 //        reduceStock(storeId, productId);
         updateShoppingList();
-        calculateTotal(allItems);
     }
 
 
@@ -199,21 +197,21 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
 //
 //    }
 
-    private void calculateTotal(ArrayList<ShoppingListItem> list){
-        double total = 0;
-        for(ShoppingListItem i: list){
-
-            total = total + i.getProduct().getPrice();
-        }
-        mTotalCost.setText(String.valueOf(total));
-    }
+//    private void calculateTotal(ArrayList<ShoppingListItem> list){
+//        double total = 0;
+//        for(ShoppingListItem i: list){
+//
+//            total = total + i.getProduct().getPrice();
+//        }
+//        mTotalCost.setText(String.valueOf(total));
+//    }
 
     private void updateShoppingList(){
         Map<String, Object> updated = new HashMap<String,Object>();
         if(adapter == null){
             adapter = new ShoppingListItemAdapter(this, allItems, this);
         }
-        shoppingList.setShopListItems(adapter.getShopppingList());
+        shoppingList.setShopListItems(adapter.getShoppingList());
         updated.put(userID, shoppingList);
         mDatabase.updateChildren(updated);
     }

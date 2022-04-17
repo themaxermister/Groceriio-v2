@@ -32,7 +32,7 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
     ArrayList<ShoppingListItem> allShoppingItems;
     private OnShoppingListItemListener mOnShoppingListItemListener;
     Filter filter;
-    private double totalPrice = 0;
+    private double total = 0;
 
 
     public ShoppingListItemAdapter(Context context, ArrayList<ShoppingListItem> _shoppingItems, OnShoppingListItemListener OnShoppingListItemListener){
@@ -99,6 +99,7 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
 
         ShoppingListItem shoppingItem = shoppingItems.get(position);
         holder.setDetails(shoppingItem);
+        holder.setTotal();
     }
 
     @Override
@@ -112,17 +113,15 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
     }
 
 
-    public double getTotalPrice(){
-        return this.totalPrice;
-    }
     // Holder Class
 
     class ShoppingListItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         OnShoppingListItemListener onShoppingListItemListener;
         ImageView shopItemImage;
-        TextView shopItemQuantity, shopItemPrice, shopItemName;
+        TextView shopItemQuantity, shopItemPrice, shopItemName, mTotalShopList;
         Button removeButton, addButton, minusButton;
         private ShoppingListItemAdapter adapter;
+
 
 
         ShoppingListItemHolder(View shoppingItemView, OnShoppingListItemListener onShoppingListItemListener){
@@ -132,6 +131,7 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
             shopItemQuantity = shoppingItemView.findViewById(R.id.listItemQuant);
             shopItemPrice = shoppingItemView.findViewById(R.id.listItemPrice);
             shopItemName = shoppingItemView.findViewById(R.id.listItemName);
+            mTotalShopList = ((Activity)context).findViewById(R.id.shopListTotalCost);
 
             removeButton = shoppingItemView.findViewById(R.id.listItemRemove);
             addButton = shoppingItemView.findViewById(R.id.listItemPlus);
@@ -140,10 +140,14 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
             removeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // delete list
+                    deleteShoppingListItem(adapter, getAdapterPosition());
+
+                    // minus the price
                     ShoppingListItem item =  allShoppingItems.get(getAdapterPosition());
                     int quantity = Integer.parseInt(shopItemQuantity.getText().toString());
-                    totalPrice -= item.getProduct().getPrice() * quantity;
-                    deleteShoppingListItem(adapter, getAdapterPosition());
+                    total -= item.getProduct().getPrice() * quantity;
+                    setTotal();
                 }
             });
 
@@ -151,9 +155,14 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // add view quantity
                     int quantity = Integer.parseInt(shopItemQuantity.getText().toString());
                     shopItemQuantity.setText(String.valueOf(quantity+1));
 
+                    // add one item price
+                    ShoppingListItem item =  allShoppingItems.get(getAdapterPosition());
+                    total += item.getProduct().getPrice();
+                    setTotal();
                 }
             });
 
@@ -161,15 +170,21 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
             minusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // minus view quantity
                     int quantity = Integer.parseInt(shopItemQuantity.getText().toString());
                     shopItemQuantity.setText(String.valueOf(quantity-1));
+
+                    //minus one item price
+                    ShoppingListItem item =  allShoppingItems.get(getAdapterPosition());
+                    total -= item.getProduct().getPrice();
+
+                    // if only one item remove the item
                     if(quantity == 1){
                         deleteShoppingListItem(adapter, getAdapterPosition());
                     }
+                    setTotal();
                 }
             });
-
-
 
             this.onShoppingListItemListener = onShoppingListItemListener;
             shoppingItemView.setOnClickListener(this);
@@ -180,9 +195,16 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
             shopItemPrice.setText(String.valueOf(shoppingItem.getProduct().getPrice()));
             shopItemQuantity.setText(String.valueOf(shoppingItem.getQuantity()));
 
+            total += shoppingItem.getQuantity() * shoppingItem.getProduct().getPrice();
+
+
             Glide.with(context)
                     .load(shoppingItem.getProduct().getImgUrl())
                     .into(shopItemImage);
+        }
+
+        void setTotal(){
+            mTotalShopList.setText(String.valueOf(total));
         }
 
         private ShoppingListItemHolder linkAdapter(ShoppingListItemAdapter adapter){
@@ -208,7 +230,7 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
         void onShoppingListItemClick(int position);
     }
 
-    public ArrayList<ShoppingListItem> getShopppingList(){
+    public ArrayList<ShoppingListItem> getShoppingList(){
         return allShoppingItems;
     }
 

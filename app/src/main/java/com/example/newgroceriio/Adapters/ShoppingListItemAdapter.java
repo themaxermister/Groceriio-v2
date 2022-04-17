@@ -182,12 +182,13 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
                     ShoppingListItem item =  allShoppingItems.get(getAdapterPosition());
                     total -= item.getProduct().getPrice();
 
+                    setTotal();
+                    updateItems(getAdapterPosition(), quantity-1);
+
                     // if only one item remove the item
                     if(quantity == 1){
                         deleteShoppingListItem(adapter, getAdapterPosition());
                     }
-                    setTotal();
-                    updateItems(getAdapterPosition(), quantity-1);
                 }
             });
 

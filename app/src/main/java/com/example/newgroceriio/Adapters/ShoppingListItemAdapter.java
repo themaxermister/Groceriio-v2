@@ -21,8 +21,10 @@ import com.example.newgroceriio.Models.ShoppingListItem;
 import com.example.newgroceriio.R;
 import com.example.newgroceriio.ShoppingListActivity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListItemAdapter.ShoppingListItemHolder> implements Filterable{
@@ -148,6 +150,7 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
                     int quantity = Integer.parseInt(shopItemQuantity.getText().toString());
                     total -= item.getProduct().getPrice() * quantity;
                     setTotal();
+                    allShoppingItems.remove(getAdapterPosition());
                 }
             });
 
@@ -163,6 +166,7 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
                     ShoppingListItem item =  allShoppingItems.get(getAdapterPosition());
                     total += item.getProduct().getPrice();
                     setTotal();
+                    updateItems(getAdapterPosition(), quantity+1);
                 }
             });
 
@@ -183,6 +187,7 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
                         deleteShoppingListItem(adapter, getAdapterPosition());
                     }
                     setTotal();
+                    updateItems(getAdapterPosition(), quantity-1);
                 }
             });
 
@@ -203,8 +208,16 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
                     .into(shopItemImage);
         }
 
+        void updateItems(int position, int quantity){
+            ShoppingListItem item = allShoppingItems.get(position);
+            item.setQuantity(quantity);
+            allShoppingItems.set(position, item);
+        }
+
         void setTotal(){
-            mTotalShopList.setText(String.valueOf(total));
+            BigDecimal p = new BigDecimal(total);
+            p = p.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+            mTotalShopList.setText(String.valueOf(p));
         }
 
         private ShoppingListItemHolder linkAdapter(ShoppingListItemAdapter adapter){

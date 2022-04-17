@@ -1,7 +1,9 @@
 package com.example.newgroceriio.Adapters;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.newgroceriio.Models.ShoppingListItem;
 import com.example.newgroceriio.R;
+import com.example.newgroceriio.ShoppingListActivity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -134,7 +137,8 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
                     adapter.allShoppingItems.remove(getAdapterPosition());
                     adapter.notifyItemRemoved(getAdapterPosition());
                     adapter.notifyItemRangeChanged(getAdapterPosition(), allShoppingItems.size());
-
+                    context.startActivity(new Intent(context,ShoppingListActivity.class));
+                    ((Activity)context).finish();
                 }
             });
 

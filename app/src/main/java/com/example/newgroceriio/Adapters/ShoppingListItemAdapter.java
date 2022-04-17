@@ -142,15 +142,15 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
             removeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // delete list
-                    deleteShoppingListItem(adapter, getAdapterPosition());
 
                     // minus the price
                     ShoppingListItem item =  allShoppingItems.get(getAdapterPosition());
                     int quantity = Integer.parseInt(shopItemQuantity.getText().toString());
                     total -= item.getProduct().getPrice() * quantity;
                     setTotal();
-                    allShoppingItems.remove(getAdapterPosition());
+
+                    // delete list
+                    deleteShoppingListItem(adapter, getAdapterPosition());
                 }
             });
 

@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 public class StockValue {
 
-    private String ProductId;
+    private String ProductStockId;
     private int QuantityAvailable;
     private int QuantitySold;
-    private String StoreId;
+    private String StoreStockId;
 
-    public String getProductId() {
-        return ProductId;
+    public String getProductStockId() {
+        return ProductStockId;
     }
 
-    public void setProductId(String productId) {
-        ProductId = productId;
+    public void setProductStockId(String productStockId) {
+        ProductStockId = productStockId;
     }
 
     public int getQuantityAvailable() {
@@ -33,11 +33,15 @@ public class StockValue {
         QuantitySold = quantitySold;
     }
 
-    public String getStoreId() {
-        return StoreId;
+    public String getStoreStockId() {
+        return StoreStockId;
     }
 
-    public void setStoreId(String storeId) {
-        StoreId = storeId;
+    public void setStoreStockId(String storeStockId) {
+        StoreStockId = storeStockId;
+    }
+
+    public void reduceStockByOne(){
+        this.QuantityAvailable -= 1;
     }
 }

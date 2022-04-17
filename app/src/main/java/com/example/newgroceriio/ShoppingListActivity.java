@@ -18,6 +18,7 @@ import com.example.newgroceriio.Adapters.ShoppingListItemAdapter;
 import com.example.newgroceriio.Models.Product;
 import com.example.newgroceriio.Models.ShoppingList;
 import com.example.newgroceriio.Models.ShoppingListItem;
+import com.example.newgroceriio.Models.StockValue;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +38,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
     private FirebaseAuth fAuth;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
+    private DatabaseReference stockRef;
     private Button mConfirmOrder, mBackToHome;
     private TextView mTotalCost;
     private String userID;
@@ -75,6 +77,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         // Database Ref
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("shopping_list_data");
+        stockRef = FirebaseDatabase.getInstance().getReference("stock_data");
 
         Intent intent = getIntent();
         String productId = intent.getStringExtra("product_id");
@@ -157,9 +160,43 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
             allItems.add(shoppingItem);
         }
 
-        shoppingList.setShopListItems(allItems);
+        reduceStock(storeId, productId);
         updateShoppingList();
         calculateTotal(allItems);
+    }
+
+
+    private void reduceStock(String storeId, String productId){
+
+
+        stockRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot s : snapshot.getChildren()){
+                    for(DataSnapshot stock : s.getChildren()){
+                        System.out.println(stock);
+                        StockValue sv = stock.getValue(StockValue.class);
+                        System.out.println(sv.getStoreStockId());
+                        System.out.println(storeId);
+                        if(sv.getStoreStockId().equals(storeId) && sv.getProductStockId().equals(productId)){
+                            Map<String, Object> updated = new HashMap<String,Object>();
+                            sv.reduceStockByOne();
+                            updated.put(sv.getProductStockId(), sv);
+                            stockRef.child(sv.getStoreStockId()).updateChildren(updated);
+
+                        }
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void calculateTotal(ArrayList<ShoppingListItem> list){
@@ -172,6 +209,10 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
 
     private void updateShoppingList(){
         Map<String, Object> updated = new HashMap<String,Object>();
+        if(adapter == null){
+            adapter = new ShoppingListItemAdapter(this, allItems, this);
+        }
+        shoppingList.setShopListItems(adapter.getShopppingList());
         updated.put(userID, shoppingList);
         mDatabase.updateChildren(updated);
     }
@@ -183,19 +224,19 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         adapter.notifyDataSetChanged();
     }
 
-//    @Override
-//    protected void onStop() {
-//        // call the superclass method first
-//        super.onStop();
-//        updateShoppingList();
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        // call the superclass method first
-//        super.onPause();
-//        updateShoppingList();
-//    }
+    @Override
+    protected void onStop() {
+        // call the superclass method first
+        super.onStop();
+        updateShoppingList();
+    }
+
+    @Override
+    protected void onPause() {
+        // call the superclass method first
+        super.onPause();
+        updateShoppingList();
+    }
 
     @Override
     public void onShoppingListItemClick(int position) {

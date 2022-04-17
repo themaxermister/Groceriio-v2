@@ -82,21 +82,28 @@ public class ProductPageActivity extends AppCompatActivity {
         mProductPgAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Integer.parseInt(mProductPgStockVal.getText().toString())>0){
-                    Intent intent = new Intent(ProductPageActivity.this, ShoppingListActivity.class);
-                    intent.putExtra("product_id", pId);
-                    intent.putExtra("store_id", storeID[0]);
-                    intent.putExtra("product_name", pName);
-                    intent.putExtra("product_url", pUrl);
-                    intent.putExtra("product_price", String.valueOf(pPrice));
-                    mProductPgAddToCart.setEnabled(false);
-                    new Timer().schedule(new TimerTask() {
-                        public void run() {
-                            startActivity(intent);
-                        }
-                    }, 5000);
-
+                if(!mProductPgStockVal.getText().toString().equals("")){
+                    if(Integer.parseInt(mProductPgStockVal.getText().toString())>0){
+                        Intent intent = new Intent(ProductPageActivity.this, ShoppingListActivity.class);
+                        intent.putExtra("product_id", pId);
+                        intent.putExtra("store_id", storeID[0]);
+                        intent.putExtra("product_name", pName);
+                        intent.putExtra("product_url", pUrl);
+                        intent.putExtra("product_price", String.valueOf(pPrice));
+                        mProductPgAddToCart.setEnabled(false);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(
+                                ProductPageActivity.this,
+                                "No Stock Left",
+                                Toast.LENGTH_SHORT)
+                                .show();
+                    }
                 }
+
+
             }
         });
 
@@ -194,7 +201,7 @@ public class ProductPageActivity extends AppCompatActivity {
                     for(DataSnapshot stock : s.getChildren()){
                         System.out.println(stock);
                         StockValue sv = stock.getValue(StockValue.class);
-                        if(sv.getStoreId().equals(storeID) && sv.getProductId().equals(pid)){
+                        if(sv.getStoreStockId().equals(storeID) && sv.getProductStockId().equals(pid)){
                             mProductPgStockVal.setText(String.valueOf(sv.getQuantityAvailable()));
                         }
                     }

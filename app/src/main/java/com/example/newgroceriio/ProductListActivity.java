@@ -127,6 +127,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         intent.putExtra("product_price", String.valueOf(p.getPrice()));
         intent.putExtra("product_url", p.getImgUrl());
         intent.putExtra("product_id", p.getProductId());
+//        intent.putExtra("currentLocation", );
         startActivity(intent);
 
 

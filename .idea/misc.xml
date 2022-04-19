@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/LENOVO/Documents/SUTD/Term4/Info Sys/Groceriio-v2/app/src/main/res/layout/activity_collection_location.xml" value="0.4" />
+        <entry key="..\:/Users/LENOVO/Documents/SUTD/Term4/Info Sys/Groceriio-v2/app/src/main/res/layout/activity_order_confirmation.xml" value="0.20625" />
         <entry key="..\:/Users/LENOVO/Documents/SUTD/Term4/Info Sys/Groceriio-v2/app/src/main/res/layout/product_list_activity.xml" value="0.2" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/divider_line.xml" value="0.1555" />
@@ -28,7 +30,7 @@
         <entry key="app/src/main/res/drawable/search_rectangle.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/vertical_dotted_line.xml" value="0.1555" />
         <entry key="app/src/main/res/layout-v23/activity_main.xml" value="0.2534901936848959" />
-        <entry key="app/src/main/res/layout/activity_collection_location.xml" value="0.3026580810546875" />
+        <entry key="app/src/main/res/layout/activity_collection_location.xml" value="0.10142669677734376" />
         <entry key="app/src/main/res/layout/activity_enter_address.xml" value="0.125" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.15889373779296873" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
@@ -53,7 +55,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

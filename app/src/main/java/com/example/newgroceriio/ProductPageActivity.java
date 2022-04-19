@@ -46,6 +46,8 @@ public class ProductPageActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private Location user_location;
+    private String latitude;
+    private String longitude;
 
     private List<LatLng> latLngList;
     private final String[] storeID = new String[1];
@@ -120,8 +122,8 @@ public class ProductPageActivity extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         user_location = new Location("");
-        String latitude = sharedPreferences.getString("user_latitude","");
-        String longitude = sharedPreferences.getString("user_longitude","");
+        latitude = sharedPreferences.getString("user_latitude","");
+        longitude = sharedPreferences.getString("user_longitude","");
         user_location.setLatitude(Double.parseDouble(latitude));
         user_location.setLongitude(Double.parseDouble(longitude));
 

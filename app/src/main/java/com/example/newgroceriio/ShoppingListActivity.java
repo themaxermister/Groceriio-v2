@@ -43,6 +43,11 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
     private static ShoppingList shoppingList;
     private static ArrayList<ShoppingListItem>  allItems;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private String storeId;
+
+    private String currentAddress = null;
+    private String currentStoreAddress = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +65,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
             }
         });
 
-        mConfirmOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ShoppingListActivity.this, CollectionLocationActivity.class));
-                finish();
-            }
-        });
+
 
 
         // Link view widgets to objects
@@ -86,12 +85,34 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         stockRef = FirebaseDatabase.getInstance().getReference("stock_data");
 
         Intent intent = getIntent();
+        currentAddress = intent.getStringExtra("currentAddress");
         String productId = intent.getStringExtra("product_id");
-        String storeId = intent.getStringExtra("store_id");
+        storeId = intent.getStringExtra("store_id");
         String productName = intent.getStringExtra("product_name");
         String productUrl = intent.getStringExtra("product_url");
         String productPrice = intent.getStringExtra("product_price");
         String prevActivity = intent.getStringExtra("prev_activity");
+
+
+        System.out.println("below is store Id, Shopping list act");
+        System.out.println(storeId);
+
+        retrieveStoreAddress();
+
+
+//        mConfirmOrder.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(ShoppingListActivity.this, CollectionLocationActivity.class);
+//                intent.putExtra("currentAddress", currentAddress);
+//                intent.putExtra("currentStoreAddress", currentStoreAddress);
+//                startActivity(intent);
+//
+//                finish();
+//            }
+//        });
+
+
 
         if(shoppingList == null){
             shoppingList = new ShoppingList();
@@ -165,6 +186,55 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
             }
         });
     }
+
+    private void retrieveStoreAddress() {
+        DatabaseReference storeRef = FirebaseDatabase.getInstance().getReference().child("store_data");
+
+        storeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    String address = s.child("Address").getValue(String.class);
+                    String newStoreId = s.child("StoreId").getValue(String.class);
+
+                    if (newStoreId.equals(storeId)) {
+                        currentStoreAddress = address;
+
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        mConfirmOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShoppingListActivity.this, CollectionLocationActivity.class);
+                intent.putExtra("currentAddress", currentAddress);
+                intent.putExtra("currentStoreAddress", currentStoreAddress);
+
+                System.out.println("this is before I start intent act in shop list");
+                System.out.println(currentAddress);
+                System.out.println(currentStoreAddress);
+                startActivity(intent);
+
+                finish();
+            }
+        });
+
+
+
+
+    }
+
 
 
     private void addItemToList(String productId, String storeId, String productName, String productUrl, String productPrice){

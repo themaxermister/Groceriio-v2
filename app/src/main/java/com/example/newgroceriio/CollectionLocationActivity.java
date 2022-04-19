@@ -58,6 +58,8 @@ public class CollectionLocationActivity extends AppCompatActivity {
     private Boolean mLocationPermissionsGranted = false;
     private List<LatLng> latLngList;
     private String TAG = "OrderConfirmationActivity";
+    private String currentAddress = null;
+    private String currentStoreAddress = null;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -82,11 +84,37 @@ public class CollectionLocationActivity extends AppCompatActivity {
             }
         });
 
+        Intent intent = getIntent();
+
+        currentStoreAddress = intent.getStringExtra("currentStoreAddress");
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        currentAddress = sharedPreferences.getString("currentAddress","");
+
+        System.out.println("Below is current address and curr store addr");
+        System.out.println(currentAddress);
+        System.out.println(currentStoreAddress);
+
+
+        mCollectEndAddr.setText(currentAddress);
+        mCollectStartAddr.setText(currentStoreAddress);
+        mCollectAddrText.setText(currentStoreAddress);
+
+
+
+
+
+
+
+
+
+
         mCollectOrderConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Redirect to next page
-                startActivity(new Intent(CollectionLocationActivity.this, OrderConfirmationActivity.class));
+                Intent intent = new Intent(CollectionLocationActivity.this, OrderConfirmationActivity.class);
+                startActivity(intent);
                 finish();
             }
         });

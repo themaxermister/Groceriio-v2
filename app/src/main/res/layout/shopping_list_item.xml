@@ -31,8 +31,8 @@
         <Button
             android:id="@+id/listItemRemove"
             style="@style/Widget.Material3.Button.Icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/ic_baseline_close_24"
             android:contentDescription="@string/delete_item"
             app:layout_constraintBottom_toBottomOf="parent"

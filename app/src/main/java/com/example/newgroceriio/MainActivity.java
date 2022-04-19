@@ -303,15 +303,17 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             getLocationPermission();
         }
+
         locClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
                 Log.d(TAG, "Found location");
                 Location current_location = (Location) task.getResult();
-
-                editor.putString("user_latitude", String.valueOf(current_location.getLatitude()));
-                editor.putString("user_longitude", String.valueOf(current_location.getLongitude()));
-                editor.apply();
+                if(current_location!= null) {
+                    editor.putString("user_latitude", String.valueOf(current_location.getLatitude()));
+                    editor.putString("user_longitude", String.valueOf(current_location.getLongitude()));
+                    editor.apply();
+                }
             }
         });
 

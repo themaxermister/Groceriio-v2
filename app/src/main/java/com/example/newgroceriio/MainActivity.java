@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
         Log.e(TAG, "onCreate MainActivity");
         setContentView(R.layout.activity_main);
 
-        currentLocationText = findViewById(R.id.homeUserName);
+        currentLocationText = findViewById(R.id.homeAddr);
 
         mStoreProductId = new HashMap<String,Integer>();
         locationsList = new ArrayList<>();

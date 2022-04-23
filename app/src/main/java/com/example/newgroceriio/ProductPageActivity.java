@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,8 +32,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ProductPageActivity extends AppCompatActivity {
     private ImageView mProductPgImage;
@@ -40,12 +39,13 @@ public class ProductPageActivity extends AppCompatActivity {
     private TextView mProductPgName, mProductPgBrand, mProductPgMetric,
             mProductPgStockVal, mProductPgPrice;
 
-    private DatabaseReference storeRef, storeRefTwo;
     private DatabaseReference stockRef;
     private List<String> locations;
 
     private SharedPreferences sharedPreferences;
     private Location user_location;
+    private String latitude;
+    private String longitude, nearestStoreId;
 
     private List<LatLng> latLngList;
     private final String[] storeID = new String[1];
@@ -65,9 +65,6 @@ public class ProductPageActivity extends AppCompatActivity {
         mProductPgPrice = findViewById(R.id.productPgPrice);
         mProductPgImage = findViewById(R.id.productPgImage);
 
-
-
-
         //Get intent from ProductListActivity
         Intent intent = getIntent();
         String pName = intent.getStringExtra("product_name");
@@ -78,6 +75,15 @@ public class ProductPageActivity extends AppCompatActivity {
         String pId = intent.getStringExtra("product_id");
 
         mProductPgAddToCart = findViewById(R.id.productPgAddToCart);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        user_location = new Location("");
+        latitude = sharedPreferences.getString("user_latitude","");
+        longitude = sharedPreferences.getString("user_longitude","");
+        user_location.setLatitude(Double.parseDouble(latitude));
+        user_location.setLongitude(Double.parseDouble(longitude));
+
+        nearestStoreId = sharedPreferences.getString("nearestStoreId", "");
+        getStockQuantity(nearestStoreId, pId);
 
         mProductPgAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +92,7 @@ public class ProductPageActivity extends AppCompatActivity {
                     if(Integer.parseInt(mProductPgStockVal.getText().toString())>0){
                         Intent intent = new Intent(ProductPageActivity.this, ShoppingListActivity.class);
                         intent.putExtra("product_id", pId);
-                        intent.putExtra("store_id", storeID[0]);
+                        intent.putExtra("store_id", nearestStoreId);
                         intent.putExtra("product_name", pName);
                         intent.putExtra("product_url", pUrl);
                         intent.putExtra("product_price", String.valueOf(pPrice));
@@ -102,8 +108,6 @@ public class ProductPageActivity extends AppCompatActivity {
                                 .show();
                     }
                 }
-
-
             }
         });
 
@@ -117,71 +121,6 @@ public class ProductPageActivity extends AppCompatActivity {
 
         locations = new ArrayList<>();
         latLngList = new ArrayList<>();
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        user_location = new Location("");
-        String latitude = sharedPreferences.getString("user_latitude","");
-        String longitude = sharedPreferences.getString("user_longitude","");
-        user_location.setLatitude(Double.parseDouble(latitude));
-        user_location.setLongitude(Double.parseDouble(longitude));
-
-        storeRef = FirebaseDatabase.getInstance().getReference("store_data");
-        storeRefTwo = FirebaseDatabase.getInstance().getReference("store_data");
-
-        storeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot s:snapshot.getChildren()){
-                    Store store = s.getValue(Store.class);
-                    System.out.println(store.getAddress());
-                    locations.add(store.getAddress());
-                }
-                convertAddressToLatLng(locations);
-                sortMarkersFromLocation(user_location);
-
-
-                storeRefTwo.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot s:snapshot.getChildren()){
-                            Store store_inner = s.getValue(Store.class);
-
-                            BigDecimal lat = new BigDecimal(store_inner.getLatitude());
-                            lat = lat.setScale(5, BigDecimal.ROUND_HALF_EVEN);
-
-                            BigDecimal log = new BigDecimal(store_inner.getLongitude());
-                            log = log.setScale(5, BigDecimal.ROUND_HALF_EVEN);
-
-                            BigDecimal lat_toCompare = new BigDecimal(latLngList.get(0).latitude);
-                            lat_toCompare = lat_toCompare.setScale(5, BigDecimal.ROUND_HALF_EVEN);
-
-                            BigDecimal log_toCompare = new BigDecimal(latLngList.get(0).longitude);
-                            log_toCompare = log_toCompare.setScale(5, BigDecimal.ROUND_HALF_EVEN);
-
-                            System.out.println(lat.toString());
-                            System.out.println(log.toString());
-                            if(lat.doubleValue() == lat_toCompare.doubleValue() && log.doubleValue() == log_toCompare.doubleValue()){
-                                storeID[0] = store_inner.getStoreId();
-
-                            }
-                        }
-                        getStockQuantity(storeID[0], pId);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
 
         mProductPgBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,70 +150,8 @@ public class ProductPageActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.i(ProductPageActivity.class.toString(),"Retrieved Data Cancelled");
             }
         });
-    }
-
-    private void convertAddressToLatLng(List<String> locations){
-
-        List<Address> addresses = new ArrayList<>();
-
-        // Convert String address to object address
-        for(String address: locations) {
-            final Geocoder geocoder = new Geocoder(this);
-
-            try {
-                List<Address> tempAddresses = geocoder.getFromLocationName(address, 1);
-                if (tempAddresses != null && !tempAddresses.isEmpty()) {
-                    Address temp = tempAddresses.get(0);
-                    // Get all product addresses
-                    System.out.println(address);
-                    addresses.add(temp);
-
-                } else {
-                    // Display appropriate message when Geocoder services are not available
-                    Toast.makeText(this, "Unable to geocode zipcode", Toast.LENGTH_LONG).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        // convert object address to object latlng
-        for(int i = 0; i < addresses.size(); i++){
-            LatLng lat_lng = new LatLng(addresses.get(i).getLatitude(), addresses.get(i).getLongitude());
-            latLngList.add(lat_lng);
-        }
-    }
-
-    private void sortMarkersFromLocation(Location current_location) {
-        System.out.println("Below is markers");
-
-        List<Location> markers = new ArrayList<>();
-
-        for(LatLng lat_lng: latLngList){
-            Location location = new Location("");
-            location.setLatitude(lat_lng.latitude);
-            location.setLongitude(lat_lng.longitude);
-            markers.add(location);
-        }
-
-        System.out.println(markers);
-        Collections.sort(markers, new SortDistance(){
-            @Override
-            public int compare(Location o1, Location o2) {
-                Float dist1 = o1.distanceTo(current_location);
-                Float dist2 = o2.distanceTo(current_location);
-                return dist1.compareTo(dist2);
-            }
-        });
-        System.out.println(markers);
-
-        latLngList = new ArrayList<>();
-        for(Location m: markers){
-            latLngList.add(new LatLng(m.getLatitude(), m.getLongitude()));
-        }
-
     }
 }

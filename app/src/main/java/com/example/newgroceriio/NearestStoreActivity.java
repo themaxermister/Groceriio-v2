@@ -42,14 +42,12 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
 
     private static final String TAG = "MapActivity";
 
-    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
 
     private EditText searchText;
     private Button mMapSearchBackBtn;
 
-    //vars
+    //Variables
     private Boolean mLocationPermissionsGranted = false;
     private FusedLocationProviderClient locClient;
     private GoogleMap mMap;
@@ -83,7 +81,7 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
             }
         });
 
-        // search for desired current location
+        // Search for desired current location
         searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override

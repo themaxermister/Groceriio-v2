@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.newgroceriio.Adapters.ProductAdapter;
 import com.example.newgroceriio.Models.Product;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductListActivity extends AppCompatActivity implements ProductAdapter.OnProductListener{
     Button mProductBackBtn;
@@ -76,7 +75,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.i(ProductListActivity.class.toString(), "Retrieved Data Cancelled");
             }
         });
 
@@ -93,7 +92,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         mInputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                Log.i(ProductListActivity.class.toString(), "beforeTextChanged");
             }
 
             @Override
@@ -103,7 +102,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
 
             @Override
             public void afterTextChanged(Editable editable) {
-                // Do nothing
+                Log.i(ProductListActivity.class.toString(), "afterTextChanged");
             }
         });
     }

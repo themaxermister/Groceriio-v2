@@ -11,4 +11,3 @@ public class Category {
         this.categoryType = categoryType;
     }
 }
-

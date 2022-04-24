@@ -360,10 +360,6 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
-        editor.putString("user_latitude", String.valueOf(current_location.getLatitude()));
-        editor.putString("user_longitude", String.valueOf(current_location.getLongitude()));
-        editor.commit();
-
         try {
             addresses = geocoder.getFromLocation(current_location.getLatitude(), current_location.getLongitude(), 1);
             currentAddress = addresses.get(0).getAddressLine(0);
@@ -404,6 +400,9 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
             }
 
         }
+
+        editor.putString("user_latitude", String.valueOf(current_location.getLatitude()));
+        editor.putString("user_longitude", String.valueOf(current_location.getLongitude()));
         editor.putString("currentAddress", currentAddress);
         editor.putString("nearestStoreId", nearestStore);
         editor.commit();

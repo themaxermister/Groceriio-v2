@@ -304,14 +304,20 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.O
 
         locClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+            getLocationPermission();
         }
         locClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
                 Location current_location = (Location) task.getResult();
+
                 // Please use a Real Android Phone, if not there will be an error HERE :')
-                sortMarkersFromLocation(current_location);
+                if(current_location != null){
+                    sortMarkersFromLocation(current_location);
+                }
+                else{
+                    getDeviceLocation();
+                }
 
             }
         });

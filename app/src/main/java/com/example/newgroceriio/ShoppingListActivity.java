@@ -90,6 +90,10 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         System.out.println("below is store Id, Shopping list act");
         System.out.println(storeId);
 
+
+        if (storeId == null) {
+            storeId = sharedPreferences.getString("nearestStoreId","");
+        }
         retrieveStoreAddress();
 
 
@@ -191,11 +195,15 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         mConfirmOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ShoppingListActivity.this, CollectionLocationActivity.class);
-                intent.putExtra("currentAddress", currentAddress);
-                intent.putExtra("currentStoreAddress", currentStoreAddress);
-                startActivity(intent);
-                finish();
+                Log.i(ShoppingListActivity.class.toString(), currentStoreAddress);
+                if (currentStoreAddress != null){
+                    Intent intent = new Intent(ShoppingListActivity.this, CollectionLocationActivity.class);
+                    intent.putExtra("currentAddress", currentAddress);
+                    intent.putExtra("currentStoreAddress", currentStoreAddress);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
     }

@@ -100,6 +100,8 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
 
     }
 
+
+    // add market based on the location searched by the user
     private void geoLocate(){
         String searchString = searchText.getText().toString();
 
@@ -133,7 +135,7 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
         }
     }
 
-
+    // get permission from phone to use the location
     private void getLocationPermission(){
         Log.d(TAG, "getLocationPermission: getting location permissions");
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
@@ -143,6 +145,7 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
                 LOCATION_PERMISSION_REQUEST_CODE);
     }
 
+    // initialize the map
     private void initMap(){
         Log.d(TAG, "initMap: initializing map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -162,6 +165,8 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
         }
     }
 
+
+    // convert address to latitude and longitude
     private void convertAddressToLatLng(List<String> locations){
 
         List<Address> addresses = new ArrayList<>();
@@ -195,6 +200,7 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
         }
     }
 
+    // get current device location
     private void getDeviceLocation(){
         locClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -231,6 +237,8 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
         }
     }
 
+
+    // move the camera to the desired lat and long
     private void moveCamera(LatLng latLng, float zoom){
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
@@ -260,6 +268,8 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
         }
     }
 
+
+    // sort the market based on current location
     private void sortMarkersFromLocation(Location current_location) {
         System.out.println("Below is markers");
 

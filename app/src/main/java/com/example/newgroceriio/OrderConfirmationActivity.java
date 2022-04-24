@@ -21,7 +21,7 @@ public class OrderConfirmationActivity extends AppCompatActivity {
         mBackToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mIntent = new Intent(OrderConfirmationActivity.this, MainActivity.class);
+                Intent mIntent = new Intent(OrderConfirmationActivity.this, ShoppingListActivity.class);
                 mIntent.putExtra("prev_activity", "order_confirmed");
                 mIntent.putExtra("uid", userId);
                 startActivity(mIntent);

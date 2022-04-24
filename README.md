@@ -1,7 +1,9 @@
 
 # 50.001 - Groceriio
 
-An Android application aimed at providing stock data to users and allowing users to create self-pick up orders at the supermarket nearest to their location.
+An Android application aimed at providing stock data to users and allowing users to manage their grocery shopping and create self-pick up orders at the supermarket nearest to their location.
+
+The aim is to allow users to verify that their desired item is in stock before making the trip to the supermarket to get the item. It also gives users the option to pick up their orders quickly from the nearest supermarket at their current location, making grocery shopping convenient any time anywhere. Furthermore, users no longer have to rely on home deliveries in order to experience convenience in grocery shopping.
 
 ## Database Structure
 
@@ -48,4 +50,22 @@ There are 3 activities in our application that uses Recycler View.
 They are the MainActivity (CategoryAdapter), ProductListActivity (ProductAdapter) and ShoppingListActivity (ShoppingListItemAdapter).
 
 Button clicks are unique to each recycler view in ShoppingListActivity so that the amount of products changes as well as the calculated Total Price.
+
+# Project Overview
+
+## Built With
+
+* [Android Studio](https://developer.android.com/studio) - Application development tool
+* [Google Firebase](https://firebase.google.com) - Database
+* [Java](https://www.java.com/en/) - Programming language
+
+## Authors
+
+* **Athena Chua** - [atheNahh](https://github.com/atheNahh)
+* **Chiam Jia Hui** - [clash9529](https://github.com/clash9529)
+* **Jobelle Lee** - [themaxermister](https://github.com/themaxermister)
+* **Kartik Nistala** - [kartikzzz](https://github.com/kartikzzz)
+* **Matthew Christopher Pohadi** - [mattChrisP](https://github.com/mattChrisP)
+* **Nur Thohirah Bte Sani** - [thoastyy](https://github.com/thoastyy)
+* **Peng Jing Ming Jason** - [derpincard](https://github.com/derpincard)
 

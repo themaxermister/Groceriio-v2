@@ -33,7 +33,7 @@ Upon logging into Grocerrio, user can select a category they are interested in a
 item they would like to purchase/check.
 
 
-## Shopping List (P1)
+### Shopping List (P1)
 
 Add cart button (In ProductPageActivity) to add 1 of the selected products to their shopping list.
 Increase or decrease the amount of products by tapping '-' or '+' in ShoppingListActivity.

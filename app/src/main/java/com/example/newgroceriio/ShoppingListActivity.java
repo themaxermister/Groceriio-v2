@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,6 +69,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        // uid is set in LoginActivity
         userID = sharedPreferences.getString("uid","");
         System.out.println("PRINT USERID");
         System.out.println(userID);
@@ -78,6 +80,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         stockRef = FirebaseDatabase.getInstance().getReference("stock_data");
 
         //Access data from intent
+        // Intent from either ProductPageActivity or OrderConfirmationActivity
         Intent intent = getIntent();
         currentAddress = intent.getStringExtra("currentAddress");
         String productId = intent.getStringExtra("product_id");
@@ -119,7 +122,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
 
     }
 
-    //function to clear all items from user's shopping list
+    //This Function clear all items from user's shopping list
     private void emptyShoppingList(String userID){
         System.out.println("EMPTYING LIST NOW");
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -140,15 +143,16 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         });
     }
 
-    //function to look for and retrieve the correct user's shopping list data from firebase
+    //This Function look for and retrieve the correct user's shopping list data from firebase
     private void retrieveShoppingList(String userID, String productId, String storeId, String productName, String productUrl, String productPrice) {
 
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot s: snapshot.getChildren()){
-
-                    if(s.getKey().equals(userID)){  //search for user's shopping list via their userID
+                    // Retrieve shoppingList for user, each shoppingList is unique to each user
+                    // Search for user's shopping list via their userID
+                    if(s.getKey().equals(userID)){
                         shoppingList = s.getValue(ShoppingList.class);
                     }
                 }
@@ -170,7 +174,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         });
     }
 
-    //function to obtain store information of relevant store from firebase
+    //This function obtain store information of relevant store from firebase
     private void retrieveStoreAddress() {
         DatabaseReference storeRef = FirebaseDatabase.getInstance().getReference().child("store_data");
 
@@ -183,6 +187,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
                     String address = s.child("Address").getValue(String.class);
                     String newStoreId = s.child("StoreId").getValue(String.class);
 
+                    // Retrieve the address of the nearest store
                     if (newStoreId.equals(storeId)) {
                         currentStoreAddress = address;
                     }
@@ -200,13 +205,21 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         mConfirmOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(ShoppingListActivity.class.toString(), currentStoreAddress);
-                if (currentStoreAddress != null){
+                // If there is items in shoppingList and nearest address is not null
+                if (currentStoreAddress != null && allItems.size() > 0){
+                    Log.i(ShoppingListActivity.class.toString(), currentStoreAddress);
                     Intent intent = new Intent(ShoppingListActivity.this, CollectionLocationActivity.class);
                     intent.putExtra("currentAddress", currentAddress);
                     intent.putExtra("currentStoreAddress", currentStoreAddress);
                     startActivity(intent);
                     finish();
+                }
+                else if (allItems.size() == 0){
+                    Toast.makeText(
+                            ShoppingListActivity.this,
+                            "Please add a product to ShoppingList",
+                            Toast.LENGTH_SHORT)
+                            .show();
                 }
 
             }
@@ -226,7 +239,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         shoppingItem.setStoreId(storeId);
         shoppingItem.add1Quantity();
 
-        //check if user's shopping list is empty and add items
+        // Fetch products in user's shopping list and add to allItems
         if(allItems.size() == 0){
             for(ShoppingListItem i: shoppingList.getShopListItems()){
                 allItems.add(i);
@@ -237,6 +250,7 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         boolean check = false;
         ArrayList<ShoppingListItem> allItemsUpdated = new ArrayList<ShoppingListItem>();
         for(ShoppingListItem i: allItems){
+            // If product pass from ProductPageActivity exist in the shoppingList then add 1 to the quantity
             if (i.getProduct().getProductName().equals(productName)) {
                 i.add1Quantity();
                 check = true;
@@ -245,9 +259,11 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
         }
         allItems = allItemsUpdated;
 
+        // If product pass from ProductPageActivity does not exist in the shoppingList then add the product into allItems
         if(!check){
             allItems.add(shoppingItem);
         }
+        // Update shoppingList in Firebase
         updateShoppingList();
     }
 
@@ -271,20 +287,20 @@ public class ShoppingListActivity extends AppCompatActivity implements ShoppingL
 
     @Override
     protected void onStop() {
-        // call the superclass method first
+        // Make sure the shoppingList is always updated in Firebase
         super.onStop();
         updateShoppingList();
     }
 
     @Override
     protected void onPause() {
-        // call the superclass method first
+        // Make sure the shoppingList is always updated in Firebase
         super.onPause();
         updateShoppingList();
     }
 
     @Override
     public void onShoppingListItemClick(int position) {
-
+        //Do Nothing
     }
 }

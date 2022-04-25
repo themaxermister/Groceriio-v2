@@ -54,8 +54,7 @@ public class RegisterFailActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-//                                    log.d(TAG,"onFailure: Email not sent" + e.getMessage());
-                        Log.d("this is a tag?", "onFailure: Email not sent" + e.getMessage());
+                        Log.d(RegisterFailActivity.class.toString(), "onFailure: Email not sent" + e.getMessage());
                     }
                 });
             }

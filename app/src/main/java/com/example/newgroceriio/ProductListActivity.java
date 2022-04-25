@@ -47,8 +47,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         recyclerView = findViewById(R.id.productRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-
+        // Get intent from MainActivity
         Intent intent = getIntent();
         String type = intent.getStringExtra("type");
         mProductTitleText.setText(type);
@@ -58,6 +57,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         ref = FirebaseDatabase.getInstance().getReference();
         productsRef = ref.child("product_data");
 
+        // Retrieve information of products with ProductType as type
         productsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -108,6 +108,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
     }
 
     private void loadToCardView(){
+        // Generating view for each product in productList
         adapter = new ProductAdapter(this, productList, this);
         recyclerView.setAdapter(adapter);
 
@@ -120,6 +121,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         Intent intent = new Intent(ProductListActivity.this, ProductPageActivity.class);
         Product p = productList.get(position);
 
+        // Pass product information to intent
         intent.putExtra("product_name", p.getProductName());
         intent.putExtra("product_brand", p.getProductBrand());
         intent.putExtra("product_metric", p.getMetric());

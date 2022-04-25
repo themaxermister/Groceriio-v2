@@ -3,6 +3,8 @@ package com.example.newgroceriio.Models;
 
 import java.util.ArrayList;
 
+// each object of ShoppingList class contains an array of ShoppingListItems objects as well as the userID of the user
+// each ShoppingList object represents one user's shopping list
 public class ShoppingList {
     private String UserUid;
     private ArrayList<ShoppingListItem> shopListItems = new ArrayList<>();

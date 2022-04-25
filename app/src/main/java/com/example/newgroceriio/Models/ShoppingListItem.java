@@ -1,6 +1,7 @@
 package com.example.newgroceriio.Models;
 
-
+// each object of ShoppingListItem class contains an object of class Product as well as its quantity and the storeID of which store has it
+// each ShoppingListItem object represents one item in a user's shopping list
 public class ShoppingListItem {
     private Product Product;
     private int Quantity;

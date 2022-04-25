@@ -61,10 +61,6 @@ public class ShoppingListItemAdapter extends RecyclerView.Adapter<ShoppingListIt
                 FilterResults filterResults = new FilterResults();
 
                 filterResults.values = filteredList;
-
-                //System.out.println("above is filtered list");
-                //System.out.println(filteredList);
-
                 return filterResults;
 
             }

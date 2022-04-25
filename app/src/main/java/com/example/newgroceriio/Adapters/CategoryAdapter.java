@@ -56,10 +56,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 FilterResults filterResults = new FilterResults();
 
                 filterResults.values = filteredList;
-
-                //System.out.println("above is filtered list");
-                //System.out.println(filteredList);
-
                 return filterResults;
 
             }

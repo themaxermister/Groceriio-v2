@@ -101,7 +101,7 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
     }
 
 
-    // add market based on the location searched by the user
+    // Sort the stores based on the location searched by the user
     private void geoLocate(){
         String searchString = searchText.getText().toString();
 
@@ -124,7 +124,7 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
             Location search_Location = new Location("");
             search_Location.setLatitude(search_Address.getLatitude());
             search_Location.setLongitude(search_Address.getLongitude());
-            // Sort location by distance
+            // Sort store locations based on search_Location
             sortMarkersFromLocation(search_Location);
 
             mMap.clear();
@@ -135,7 +135,7 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
         }
     }
 
-    // get permission from phone to use the location
+    // Get permission from phone to use the location
     private void getLocationPermission(){
         Log.d(TAG, "getLocationPermission: getting location permissions");
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
@@ -145,7 +145,7 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
                 LOCATION_PERMISSION_REQUEST_CODE);
     }
 
-    // initialize the map
+    // Initialize the map
     private void initMap(){
         Log.d(TAG, "initMap: initializing map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -154,8 +154,6 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Intent intent = getIntent();
-
         Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
@@ -166,7 +164,7 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
     }
 
 
-    // convert address to latitude and longitude
+    // Convert address to latitude and longitude
     private void convertAddressToLatLng(List<String> locations){
 
         List<Address> addresses = new ArrayList<>();
@@ -193,14 +191,14 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
             }
         }
 
-        // convert object address to object latlng
+        // Convert object Address to object LatLng
         for(int i = 0; i < addresses.size(); i++){
             LatLng lat_lng = new LatLng(addresses.get(i).getLatitude(), addresses.get(i).getLongitude());
             latLngList.add(lat_lng);
         }
     }
 
-    // get current device location
+    // Get current device location
     private void getDeviceLocation(){
         locClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -216,7 +214,7 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
                             Location current_location = (Location)task.getResult();
                             moveCamera(new LatLng(current_location.getLatitude(), current_location.getLongitude()), 15f);
 
-                            // Sort location by distance
+                            // Sort store locations based on current_location
                             sortMarkersFromLocation(current_location);
 
                             //Create markers to indicate all store locations
@@ -269,7 +267,7 @@ public class NearestStoreActivity extends AppCompatActivity implements OnMapRead
     }
 
 
-    // sort the market based on current location
+    // Sort store locations based on current_location
     private void sortMarkersFromLocation(Location current_location) {
         System.out.println("Below is markers");
 
